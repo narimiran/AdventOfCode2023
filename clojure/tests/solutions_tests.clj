@@ -17,13 +17,14 @@
         test-input (str day "_test")
         real-input day]
     `(deftest ~test-name
-       (is (= (~solve-fn ~test-input) ~test-results))
+       (when ~test-results
+         (is (= (~solve-fn ~test-input) ~test-results)))
        (is (= (~solve-fn ~real-input) ~real-results)))))
 
 
 
 
-(check-day 1 [1 2] [3 4])
+(check-day 1 nil [56049 54530])
 
 
 (let [summary (run-tests)]

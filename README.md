@@ -37,7 +37,7 @@ I currently don't have the time to solve in multiple languages, but I suspect I'
 Task                                          | Clojure                        | Comment
 ---                                           | ---                            | ---
 Day 00: Helper file                           | [aoc.clj](clojure/aoc.clj)     | Utilities I use to solve the tasks.
-<!-- [Day 01](http://adventofcode.com/2023/day/1)  | [day01.clj](clojure/day01.clj) | -->
+[Day 01](http://adventofcode.com/2023/day/1)  | [day01.clj](clojure/day01.clj) | Tougher than expected for day 1.
 <!-- [Day 02](http://adventofcode.com/2023/day/2)  | [day02.clj](clojure/day02.clj) | -->
 <!-- [Day 03](http://adventofcode.com/2023/day/3)  | [day03.clj](clojure/day03.clj) | -->
 <!-- [Day 04](http://adventofcode.com/2023/day/4)  | [day04.clj](clojure/day04.clj) | -->
