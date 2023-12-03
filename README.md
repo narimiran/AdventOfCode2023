@@ -39,7 +39,7 @@ Task                                          | Clojure                        |
 Day 00: Helper file                           | [aoc.clj](clojure/aoc.clj)     | Utilities I use to solve the tasks.
 [Day 01](http://adventofcode.com/2023/day/1)  | [day01.clj](clojure/day01.clj) | Tougher than expected for day 1.
 [Day 02](http://adventofcode.com/2023/day/2)  | [day02.clj](clojure/day02.clj) | Immediately calculate maximums.
-<!-- [Day 03](http://adventofcode.com/2023/day/3)  | [day03.clj](clojure/day03.clj) | -->
+[Day 03](http://adventofcode.com/2023/day/3)  | [day03.clj](clojure/day03.clj) | Tedious parsing.
 <!-- [Day 04](http://adventofcode.com/2023/day/4)  | [day04.clj](clojure/day04.clj) | -->
 <!-- [Day 05](http://adventofcode.com/2023/day/5)  | [day05.clj](clojure/day05.clj) | -->
 <!-- [Day 06](http://adventofcode.com/2023/day/6)  | [day06.clj](clojure/day06.clj) | -->
