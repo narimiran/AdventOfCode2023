@@ -17,10 +17,13 @@
    (is (= (aoc/parse-multiline-string input f) result))))
 
 (deftest parsing
+  (testing "digits"
+    (is (= (aoc/string->digits "123") [1 2 3]))
+    (is (= (aoc/string->digits "ab1cd2e") [1 2])))
   (testing "ints"
     (test-parsing int-lines         ["123" "-456" "789"])
     (test-parsing int-lines :int    [123 -456 789])
-    (test-parsing int-lines :digits [[1 2 3] [nil 4 5 6] [7 8 9]])
+    (test-parsing int-lines :digits [[1 2 3] [4 5 6] [7 8 9]])
     (test-parsing ints-lines :ints  [[1 2 3] [4 -5 6] [7 8 9]]))
   (testing "chars"
     (test-parsing char-lines        ["abc" "def" "ghi"])
@@ -75,7 +78,7 @@
 
 
 (def grid ["#.." "..#" "##."])
-(def walls #{[0 0] [2 1] [0 2] [1 2]})
+(def walls {[0 0] \# , [2 1] \# , [0 2] \# , [1 2] \#})
 
 (deftest vec->set
   (is (= (aoc/grid->points grid #(= % \#)) walls)))

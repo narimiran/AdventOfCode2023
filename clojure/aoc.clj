@@ -10,7 +10,8 @@
 
 (defn string->digits [s]
   (->> (str/split s #"")
-       (mapv parse-long)))
+       (map parse-long)
+       (filterv some?)))
 
 
 (defn parse-multiline-string
@@ -86,11 +87,11 @@
 (defn grid->points
   ([v] (grid->points v identity))
   ([v pred]
-   (into #{}
+   (into {}
          (for [[y line] (map-indexed vector v)
                [x char] (map-indexed vector line)
                :when (pred char)]
-           [x y]))))
+           [[x y] char]))))
 
 
 (defn none? [pred xs]
