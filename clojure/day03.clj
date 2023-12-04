@@ -1,6 +1,5 @@
 (ns day03
-  (:require aoc
-            [clojure.set :as set]))
+  (:require aoc))
 
 
 (def digits (set (apply str (range 10))))
@@ -9,7 +8,7 @@
   (set (keys (remove #(digits (val %)) grid))))
 
 (defn adjacent-symbols [pt symbs]
-  (set/intersection symbs (set (aoc/neighbours pt 8))))
+  (keep symbs (aoc/neighbours pt 8)))
 
 (defn gear-ratios [gear-values]
   (keep
@@ -57,7 +56,7 @@
                       :pt [(inc x) y]
                       :curr (str curr ((lines y) x))
                       :near-symbol? (or near-symbol? (seq (adjacent-symbols pt symbs)))
-                      :current-gears (set/union current-gears (adjacent-symbols pt gears))))))))
+                      :current-gears (into current-gears (adjacent-symbols pt gears))))))))
 
 
 (defn solve [input-file]
