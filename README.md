@@ -42,7 +42,7 @@ Day 00: Helper file                           | [aoc.clj](clojure/aoc.clj)     |
 [Day 03](http://adventofcode.com/2023/day/3)  | [day03.clj](clojure/day03.clj) | Tedious parsing.
 [Day 04](http://adventofcode.com/2023/day/4)  | [day04.clj](clojure/day04.clj) | Set as a predicate for `keep`.
 [Day 05](http://adventofcode.com/2023/day/5)  | [day05.clj](clojure/day05.clj) | Toughest one so far.
-<!-- [Day 06](http://adventofcode.com/2023/day/6)  | [day06.clj](clojure/day06.clj) | -->
+[Day 06](http://adventofcode.com/2023/day/6)  | [day06.clj](clojure/day06.clj) | Will the real Day1 please stand up?
 <!-- [Day 07](http://adventofcode.com/2023/day/7)  | [day07.clj](clojure/day07.clj) | -->
 <!-- [Day 08](http://adventofcode.com/2023/day/8)  | [day08.clj](clojure/day08.clj) | -->
 <!-- [Day 09](http://adventofcode.com/2023/day/9)  | [day09.clj](clojure/day09.clj) | -->
