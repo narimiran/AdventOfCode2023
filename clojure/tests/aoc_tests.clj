@@ -103,6 +103,19 @@
     (is (= (aoc/find-first odd? stevens) 21))))
 
 
+(deftest gcd-lcm
+  (testing "gcd"
+    (is (= (aoc/gcd 2 3) 1))
+    (is (= (aoc/gcd 4 12) 4))
+    (is (= (aoc/gcd 25 15) 5))
+    (is (= (aoc/gcd 7 17) 1)))
+  (testing "lcm"
+    (is (= (aoc/lcm 2 3) 6))
+    (is (= (aoc/lcm 4 12) 12))
+    (is (= (aoc/lcm 25 15) 75))
+    (is (= (aoc/lcm 7 17) (* 7 17)))))
+
+
 
 
 (let [summary (run-tests)]

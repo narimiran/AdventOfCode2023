@@ -127,3 +127,15 @@
      (when (pred x) (reduced x)))
    nil
    xs))
+
+
+(defn gcd
+  ([] 1)
+  ([x] x)
+  ([a b] (if (zero? b) a
+             (recur b (mod a b)))))
+
+(defn lcm
+  ([] 1)
+  ([x] x)
+  ([a b] (/ (* a b) (gcd a b))))
