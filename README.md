@@ -45,7 +45,7 @@ Day 00: Helper file                           | [aoc.clj](clojure/aoc.clj)     |
 [Day 06](http://adventofcode.com/2023/day/6)  | [day06.clj](clojure/day06.clj) | Will the real Day1 please stand up?
 [Day 07](http://adventofcode.com/2023/day/7)  | [day07.clj](clojure/day07.clj) | Changing card representation is the real MVP.
 [Day 08](http://adventofcode.com/2023/day/8)  | [day08.clj](clojure/day08.clj) | Underwhelming to see _that_ to be solution for part 2.
-<!-- [Day 09](http://adventofcode.com/2023/day/9)  | [day09.clj](clojure/day09.clj) | -->
+[Day 09](http://adventofcode.com/2023/day/9)  | [day09.clj](clojure/day09.clj) | .esreveR
 <!-- [Day 10](http://adventofcode.com/2023/day/10) | [day10.clj](clojure/day10.clj) | -->
 <!-- [Day 11](http://adventofcode.com/2023/day/11) | [day11.clj](clojure/day11.clj) | -->
 <!-- [Day 12](http://adventofcode.com/2023/day/12) | [day12.clj](clojure/day12.clj) | -->
