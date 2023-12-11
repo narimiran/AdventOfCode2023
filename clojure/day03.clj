@@ -1,5 +1,6 @@
 (ns day03
-  (:require aoc))
+  (:require aoc
+            [clojure.string :as str]))
 
 
 (def digits (set (apply str (range 10))))
@@ -7,8 +8,6 @@
 (defn symbol-coords [grid]
   (set (keys (remove #(digits (val %)) grid))))
 
-(defn adjacent-symbols [pt symbs]
-  (keep symbs (aoc/neighbours pt 8)))
 
 (defn gear-ratios [gear-values]
   (keep
@@ -16,57 +15,52 @@
       (reduce * %))
    gear-values))
 
+(defn touching [symbs x y len]
+  (for [yy (range (dec y) (+ y 2))
+        xx (range (dec x) (inc (+ x len)))
+        :let [pt [xx yy]]
+        :when (symbs pt)]
+    pt))
+
 
 (defn find-solution [lines symbs gears]
-  (let [h (count lines)
-        w (count (first lines))
-        zero-state {:pt [0 0]
-                    :curr ""
-                    :near-symbol? false
-                    :numbers []
-                    :current-gears #{}
-                    :gear-values {}}]
-    (loop [{:keys [curr near-symbol? numbers current-gears gear-values]
-            [x y :as pt] :pt
-            :as state} zero-state]
-      (cond
-        (= y h)
-        {:nums numbers
-         :gear-ratios (gear-ratios (vals gear-values))}
-
-        (or (= x w)
-            (= \. ((lines y) x))
-            (symbs pt))
-        (if (and near-symbol? (seq curr))
-          (let [number (parse-long curr)]
-            (recur (assoc zero-state
-                          :pt (if (= x w) [0 (inc y)] [(inc x) y])
-                          :numbers (conj numbers number)
-                          :gear-values (reduce (fn [gvals gear]
-                                                 (update gvals gear conj number))
-                                               gear-values
-                                               current-gears))))
-          (recur (assoc zero-state
-                        :pt (if (= x w) [0 (inc y)] [(inc x) y])
-                        :numbers numbers
-                        :gear-values gear-values)))
-
-        :else
-        (recur (assoc state
-                      :pt [(inc x) y]
-                      :curr (str curr ((lines y) x))
-                      :near-symbol? (or near-symbol? (seq (adjacent-symbols pt symbs)))
-                      :current-gears (into current-gears (adjacent-symbols pt gears))))))))
+  (loop [lines lines
+         y 0
+         acc 0
+         gear-map {}]
+    (if-let [line (first lines)]
+      (let [[acc' gear-map' _]
+            (reduce
+             (fn [[acc'' gear-map'' start] num]
+               (let [x (str/index-of line num start)
+                     number (parse-long num)
+                     len (count num)
+                     nearby-gears (touching gears x y len)
+                     near-symbs? (or (seq nearby-gears)
+                                     (seq (touching symbs x y len)))]
+                 [(if near-symbs? (+ acc'' number) acc'')
+                  (if (seq nearby-gears)
+                    (reduce (fn [gmap gear]
+                              (update gmap gear conj number))
+                            gear-map''
+                            nearby-gears)
+                    gear-map'')
+                  (+ x len)]))
+             [acc gear-map 0]
+             (re-seq #"\d+" line))]
+        (recur (rest lines) (inc y) acc' gear-map'))
+      {:num-sum acc
+       :gear-ratios (reduce + (gear-ratios (vals gear-map)))})))
 
 
 (defn solve [input-file]
-  (let [lines    (aoc/read-input input-file :chars)
+  (let [lines    (aoc/read-input input-file)
         points   (aoc/grid->points lines #(not= % \.))
         symbs    (symbol-coords points)
         gears    (set (filter #(= \* (points %)) symbs))
         solution (find-solution lines symbs gears)]
-    [(reduce + (:nums solution))
-     (reduce + (:gear-ratios solution))]))
+    [(:num-sum solution)
+     (:gear-ratios solution)]))
 
 
 (solve 3)
