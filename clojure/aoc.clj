@@ -114,7 +114,7 @@
         false
         (recur (dec idx) acc)))))
 
-(defn count-if [pred xs]
+(defn count-if ^long [pred xs]
   (reduce
    (fn [^long acc x]
      (if (pred x) (inc acc) acc))
