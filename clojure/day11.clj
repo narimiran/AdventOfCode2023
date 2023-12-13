@@ -5,39 +5,55 @@
 (def ^:const multi (dec 1000000))
 
 
+(defn find-galaxies [lines]
+  (for [[y line] (map-indexed vector lines)
+        [x chr] (map-indexed vector line)
+        :when (= chr \#)]
+    [x y]))
+
+
 (defn empty-lines [lines]
   (keep
    (fn [[i line]]
      (when (every? #(= % \.) line) i))
    (map-indexed vector lines)))
 
-(defn expand [universe]
-  (let [empty-rows (empty-lines universe)
-        empty-cols (empty-lines (aoc/transpose universe))]
-    (for [[^long y line] (map-indexed vector universe)
-          [^long x chr]  (map-indexed vector line)
-          :when (= chr \#)
-          :let [move-right (aoc/count-if #(< ^long % x) empty-cols)
-                move-down  (aoc/count-if #(< ^long % y) empty-rows)]]
-      [[(+ x move-right)
-        (+ y move-down)]
-       [(+ x (* multi move-right))
-        (+ y (* multi move-down))]])))
 
-(defn distances [coords]
-  (for [[^long x1 ^long y1] coords
-        [^long x2 ^long y2] coords
-        :while (not (and (= x1 x2) (= y1 y2)))]
-    (+ (- x1 x2) (abs (- y1 y2)))))
+(defn calc-dist [galaxies]
+  (->> galaxies
+       (reduce (fn [{:keys [coeff] :as acc} coord]
+                 (-> acc
+                     (update :sum + (* coeff coord))
+                     (update :coeff + 2)))
+               {:sum 0
+                :coeff (- 1 (count galaxies))})
+       :sum))
+
+
+(defn expansion [galaxies empties]
+  (let [total (count galaxies)]
+    (reduce
+     (fn [acc coord]
+       (let [before (count (take-while #(< % coord) galaxies))
+             after (- total before)]
+         (+ acc (* before after))))
+     0
+     empties)))
+
 
 (defn solve [input-file]
-  (let [universe (->> (aoc/read-input input-file)
-                      expand
-                      sort)
-        p1-galaxies (map first universe)
-        p2-galaxies (map second universe)]
-    [(reduce + (distances p1-galaxies))
-     (reduce + (distances p2-galaxies))]))
+  (let [lines (aoc/read-input input-file)
+        galaxies (find-galaxies lines)
+        galaxies-x (sort (map first galaxies))
+        galaxies-y (sort (map second galaxies))
+        empty-rows (empty-lines lines)
+        empty-cols (empty-lines (aoc/transpose lines))
+        distances (+ (calc-dist galaxies-x)
+                     (calc-dist galaxies-y))
+        expansions (+ (expansion galaxies-x empty-cols)
+                      (expansion galaxies-y empty-rows))]
+    [(+ distances expansions)
+     (+ distances (* multi expansions))]))
 
 
 (solve 11)
