@@ -50,7 +50,7 @@ Day 00: Helper file                           | [aoc.clj](clojure/aoc.clj)     |
 [Day 11](http://adventofcode.com/2023/day/11) | [day11.clj](clojure/day11.clj) | Off-by-one trap!
 [Day 12](http://adventofcode.com/2023/day/12) | [day12.clj](clojure/day12.clj) | Immutability, meet my friend `atom`.
 [Day 13](http://adventofcode.com/2023/day/13) | [day13.clj](clojure/day13.clj) | My helper functions to the rescue.
-<!-- [Day 14](http://adventofcode.com/2023/day/14) | [day14.clj](clojure/day14.clj) | -->
+[Day 14](http://adventofcode.com/2023/day/14) | [day14.clj](clojure/day14.clj) | Very slow solution. There must be a better way.
 <!-- [Day 15](http://adventofcode.com/2023/day/15) | [day15.clj](clojure/day15.clj) | -->
 <!-- [Day 16](http://adventofcode.com/2023/day/16) | [day16.clj](clojure/day16.clj) | -->
 <!-- [Day 17](http://adventofcode.com/2023/day/17) | [day17.clj](clojure/day17.clj) | -->

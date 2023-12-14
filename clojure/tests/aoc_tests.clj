@@ -80,8 +80,8 @@
 (def grid ["#.." "..#" "##."])
 (def walls {[0 0] \# , [2 1] \# , [0 2] \# , [1 2] \#})
 
-(deftest vec->set
-  (is (= (aoc/grid->points grid #(= % \#)) walls)))
+(deftest vec->map
+  (is (= (aoc/grid->points grid #{\#}) walls)))
 
 
 
