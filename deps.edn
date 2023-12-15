@@ -2,9 +2,11 @@
  :deps {org.clojure/clojure {:mvn/version "1.11.1"}
         org.clojure/core.match {:mvn/version "1.0.0"}
         org.clojure/data.int-map {:mvn/version "1.2.1"}
-        org.clojure/core.async {:mvn/version "1.6.681"}}
+        org.clojure/core.async {:mvn/version "1.6.681"}
+        org.flatland/ordered {:mvn/version "1.15.11"}}
  :aliases
  {:profile {:jvm-opts ["-Djdk.attach.allowAttachSelf"]
             :extra-deps {criterium/criterium {:mvn/version "0.4.6"}
-                         com.clojure-goes-fast/clj-async-profiler {:mvn/version "1.1.0"}}}
+                         com.clojure-goes-fast/clj-async-profiler {:mvn/version "1.1.0"}
+                         com.taoensso/tufte {:mvn/version "2.6.3"}}}
   :viz {:extra-deps {quil/quil {:mvn/version "4.3.1323"}}}}}
