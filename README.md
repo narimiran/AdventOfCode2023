@@ -54,7 +54,7 @@ Day 00: Helper file                           | [aoc.clj](clojure/aoc.clj)     |
 [Day 15](http://adventofcode.com/2023/day/15) | [day15.clj](clojure/day15.clj) | Advent of Reading.
 [Day 16](http://adventofcode.com/2023/day/16) | [day16.clj](clojure/day16.clj) | Is this a cousin of Day 10?
 [Day 17](http://adventofcode.com/2023/day/17) | [day17.clj](clojure/day17.clj) | Consider only L/R directions, and then go straight as far as you can.
-<!-- [Day 18](http://adventofcode.com/2023/day/18) | [day18.clj](clojure/day18.clj) | -->
+[Day 18](http://adventofcode.com/2023/day/18) | [day18.clj](clojure/day18.clj) | TIL about Shoelace formula and Pick's theorem.
 <!-- [Day 19](http://adventofcode.com/2023/day/19) | [day19.clj](clojure/day19.clj) | -->
 <!-- [Day 20](http://adventofcode.com/2023/day/20) | [day20.clj](clojure/day20.clj) | -->
 <!-- [Day 21](http://adventofcode.com/2023/day/21) | [day21.clj](clojure/day21.clj) | -->
