@@ -2,6 +2,9 @@
   (:require [clojure.string :as str]))
 
 
+(def empty-queue clojure.lang.PersistentQueue/EMPTY)
+
+
 (defn integers
   [s & {:keys [negative?]
         :or {negative? true}}]

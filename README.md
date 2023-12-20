@@ -22,7 +22,7 @@ I really liked the language (I've also written about [how to make Clojure soluti
 
 As a preparation for this year, I used Clojure for AoC 2016 and I experimented with the `quil` library to [make some visualizations](https://github.com/narimiran/advent_of_code_2016#visualizations).
 
-This year, I plan to do as much visualizations as I can, using the same library.
+~~This year, I plan to do as much visualizations as I can, using the same library.~~
 
 
 &nbsp;
@@ -56,7 +56,7 @@ Day 00: Helper file                           | [aoc.clj](clojure/aoc.clj)     |
 [Day 17](http://adventofcode.com/2023/day/17) | [day17.clj](clojure/day17.clj) | Consider only L/R directions, and then go straight as far as you can.
 [Day 18](http://adventofcode.com/2023/day/18) | [day18.clj](clojure/day18.clj) | TIL about Shoelace formula and Pick's theorem.
 [Day 19](http://adventofcode.com/2023/day/19) | [day19.clj](clojure/day19.clj) | Simpler ranges than Day 5.
-<!-- [Day 20](http://adventofcode.com/2023/day/20) | [day20.clj](clojure/day20.clj) | -->
+[Day 20](http://adventofcode.com/2023/day/20) | [day20.clj](clojure/day20.clj) | Some manual searching through the input needed.
 <!-- [Day 21](http://adventofcode.com/2023/day/21) | [day21.clj](clojure/day21.clj) | -->
 <!-- [Day 22](http://adventofcode.com/2023/day/22) | [day22.clj](clojure/day22.clj) | -->
 <!-- [Day 23](http://adventofcode.com/2023/day/23) | [day23.clj](clojure/day23.clj) | -->
