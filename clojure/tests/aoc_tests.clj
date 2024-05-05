@@ -59,6 +59,13 @@
   (is (= 13 (aoc/manhattan pt1 pt2)))
   (is (= [9 -2] (aoc/pt+ pt1 pt2)))
 
+  (is (aoc/inside? 10 5 7))
+  (is (not (aoc/inside? 10 5 17)))
+  (is (aoc/inside? 10 0 0))
+  (is (not (aoc/inside? 10 0 -1)))
+  (is (aoc/inside? 10 20 9 17))
+  (is (not (aoc/inside? 10 20 17 9)))
+
   (test-neighbours pt1 4 '(      [2 2]
                            [1 3]       [3 3]
                                  [2 4]))

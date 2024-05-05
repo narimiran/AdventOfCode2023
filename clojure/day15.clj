@@ -42,11 +42,11 @@
               (* (inc i) (inc j) focal))))
 
 
-(defn solve [input-file]
-  (let [steps (aoc/read-input-line input-file :words #",")
+(defn solve [input]
+  (let [steps (aoc/parse-input-line input :words #",")
         instructions (map parse-instruction steps)]
     [(reduce + (map word-hash steps))
      (focusing-power (hashmap instructions))]))
 
 
-(solve 15)
+(solve (aoc/read-file 15))

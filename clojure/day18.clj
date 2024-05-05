@@ -34,10 +34,10 @@
        long))
 
 
-(defn solve [input-file]
-  (let [dig-plan (aoc/read-input input-file parse-line)]
+(defn solve [input]
+  (let [dig-plan (aoc/parse-input input parse-line)]
     [(dig-trench (map :p1 dig-plan))
      (dig-trench (map :p2 dig-plan))]))
 
 
-(solve 18)
+(solve (aoc/read-file 18))

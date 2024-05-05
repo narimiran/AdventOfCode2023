@@ -27,11 +27,11 @@
   (reduce * (vals game)))
 
 
-(defn solve [input-file]
-  (let [lines (aoc/read-input input-file :words {:word-sep #": |; |, "})
+(defn solve [input]
+  (let [lines (aoc/parse-input input :words {:word-sep #": |; |, "})
         games (map maximums lines)]
     [(reduce + (find-valid games))
      (reduce + (map power games))]))
 
 
-(solve 2)
+(solve (aoc/read-file 2))

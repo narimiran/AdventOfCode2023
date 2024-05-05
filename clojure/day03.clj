@@ -53,14 +53,13 @@
        :gear-ratios (reduce + (gear-ratios (vals gear-map)))})))
 
 
-(defn solve [input-file]
-  (let [lines    (aoc/read-input input-file)
+(defn solve [input]
+  (let [lines    (aoc/parse-input input)
         points   (aoc/grid->points lines #(not= % \.))
         symbs    (symbol-coords points)
         gears    (set (filter #(= \* (points %)) symbs))
         solution (find-solution lines symbs gears)]
-    [(:num-sum solution)
-     (:gear-ratios solution)]))
+    ((juxt :num-sum :gear-ratios) solution)))
 
 
-(solve 3)
+(solve (aoc/read-file 3))

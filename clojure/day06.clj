@@ -18,12 +18,12 @@
     (inc (- (- time x1) x1))))
 
 
-(defn solve [input-file]
-  (let [[times distances] (aoc/read-input input-file :ints)
+(defn solve [input]
+  (let [[times distances] (aoc/parse-input input :ints)
         time-2 (fix-keming times)
         distance-2 (fix-keming distances)]
     [(transduce (map find-winners) * (zipmap times distances))
      (find-winners [time-2 distance-2])]))
 
 
-(solve 6)
+(solve (aoc/read-file 6))

@@ -15,10 +15,10 @@
        (reduce +)))
 
 
-(defn solve [input-file]
-  (let [histories (aoc/read-input input-file :ints)]
+(defn solve [input]
+  (let [histories (aoc/parse-input input :ints)]
     [(prev-sum rseq histories)
      (prev-sum identity histories)]))
 
 
-(solve 9)
+(solve (aoc/read-file 9))

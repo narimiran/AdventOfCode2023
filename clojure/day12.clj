@@ -44,11 +44,11 @@
         @score))))
 
 
-(defn solve [input-file]
-  (let [lines (aoc/read-input input-file parse-line)
+(defn solve [input]
+  (let [lines (aoc/parse-input input parse-line)
         unfolded (map unfold lines)]
     [(reduce + (map arrangements lines))
      (reduce + (pmap arrangements unfolded))]))
 
 
-(solve 12)
+(solve (aoc/read-file 12))

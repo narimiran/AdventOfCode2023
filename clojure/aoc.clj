@@ -5,6 +5,13 @@
 (def empty-queue clojure.lang.PersistentQueue/EMPTY)
 
 
+(defn read-file [file]
+  (let [name (if (int? file)
+               (format "%02d" file)
+               file)]
+    (slurp (str "inputs/" name ".txt"))))
+
+
 (defn integers
   [s & {:keys [negative?]
         :or {negative? true}}]
@@ -16,40 +23,29 @@
        (map parse-long)
        (filterv some?)))
 
-
-(defn parse-multiline-string
+(defn parse-input
   [s & [parse-fn {:keys [word-sep nl-sep]}]]
-  (->> (str/split s (or nl-sep #"\n"))
-       ((if (nil? parse-fn) identity
-           (partial mapv
-            (case parse-fn
-              :int    parse-long
-              :ints   integers
-              :digits string->digits
-              :chars  vec
-              :words  #(str/split % (or word-sep #" "))
-              parse-fn))))))
+  (let [f (case parse-fn
+            :int    parse-long
+            :ints   integers
+            :digits string->digits
+            :chars  vec
+            :words  #(str/split % (or word-sep #" "))
+            nil     identity
+            parse-fn)]
+    (mapv f (str/split s (or nl-sep #"\n")))))
 
-
-(defn read-input
-  [input & [parse-fn seps]]
-  (let [name (if (int? input)
-               (format "%02d" input)
-               input)]
-    (-> (str "inputs/" name ".txt")
-        slurp
-        (parse-multiline-string parse-fn seps))))
-
-(defn read-input-line
+(defn parse-input-line
   [input & [parse-fn word-sep]]
   (-> input
-      (read-input parse-fn {:word-sep word-sep})
+      (parse-input parse-fn {:word-sep word-sep})
       first))
 
-(defn read-input-paragraphs
+(defn parse-input-paragraphs
   [input & [parse-fn word-sep]]
-  (->> (read-input input nil {:nl-sep #"\n\n"})
-       (mapv #(parse-multiline-string % parse-fn {:word-sep word-sep}))))
+  (-> input
+      (parse-input nil {:nl-sep #"\n\n"})
+      (->> (mapv #(parse-input % parse-fn {:word-sep word-sep})))))
 
 
 (defn transpose [matrix]
@@ -69,6 +65,12 @@
 
 (defn pt+ ^longs [[^long ax ^long ay] [^long bx ^long by]]
   [(+ ax bx) (+ ay by)])
+
+(defn inside?
+  ([size x y] (inside? size size x y))
+  ([size-x size-y x y]
+   (and (< -1 x size-x)
+        (< -1 y size-y))))
 
 (defn neighbours ^longs [[^long x ^long y] ^long amount]
   (for [^long dy [-1 0 1]

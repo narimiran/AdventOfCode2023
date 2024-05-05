@@ -13,8 +13,6 @@
 (defn traverse [city min-straight max-straight]
   (let [size (count city)
         end (dec size)
-        valid? (fn [x y] (and (< -1 x size)
-                              (< -1 y size)))
         queue (priority-map [0 0 1 0] 0
                             [0 0 0 1] 0)]
     (loop [seen #{}
@@ -33,7 +31,7 @@
                  (fn [q n]
                    (let [nx (+ x (* n dx'))
                          ny (+ y (* n dy'))]
-                     (if-not (valid? nx ny)
+                     (if-not (aoc/inside? size nx ny)
                        (reduced q)
                        (let [heat' (+ heat (heat-loss city x y dx' dy' n))
                              state' [nx ny dx' dy']]
@@ -45,11 +43,10 @@
                [dy (- dx)]]))))))))
 
 
-(defn solve [input-file]
-  (let [city (aoc/read-input input-file :digits)]
+(defn solve [input]
+  (let [city (aoc/parse-input input :digits)]
     [(traverse city 1 3)
      (traverse city 4 10)]))
 
 
-(solve 17)
-
+(solve (aoc/read-file 17))

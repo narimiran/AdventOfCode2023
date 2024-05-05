@@ -63,10 +63,10 @@
    (range)))
 
 
-(defn solve [input-file]
-  (let [platform (aoc/read-input input-file)]
+(defn solve [input]
+  (let [platform (aoc/parse-input input)]
     [(calc-score (move-north platform))
      (calc-score (shake platform))]))
 
 
-(solve 14)
+(solve (aoc/read-file 14))

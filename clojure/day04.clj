@@ -30,11 +30,11 @@
      (range size))))
 
 
-(defn solve [input-file]
-  (let [lines   (aoc/read-input input-file parse-line)
+(defn solve [input]
+  (let [lines   (aoc/parse-input input parse-line)
         winners (mapv winning-numbers lines)]
     [(reduce + (map points winners))
      (reduce + (new-rules winners))]))
 
 
-(solve 4)
+(solve (aoc/read-file 4))

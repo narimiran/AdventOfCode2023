@@ -34,10 +34,10 @@
        (reduce +)))
 
 
-(defn solve [input-file]
-  (let [lines (aoc/read-input input-file)]
+(defn solve [input]
+  (let [lines (aoc/parse-input input)]
     [(calibration-sum lines #"\d" #"\d")
      (calibration-sum lines first-patt last-patt)]))
 
 
-(solve 1)
+(solve (aoc/read-file 1))

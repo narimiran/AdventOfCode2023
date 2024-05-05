@@ -26,8 +26,8 @@
    starts))
 
 
-(defn solve [input-file]
-  (let [[[instrs'] network'] (aoc/read-input-paragraphs input-file)
+(defn solve [input]
+  (let [[[instrs'] network'] (aoc/parse-input-paragraphs input)
         network (parse-network network')
         instrs (mapv (comp keyword str) instrs')
         starts (filter #(str/ends-with? % "A") (keys network))]
@@ -35,4 +35,4 @@
      (ghost-steps instrs network starts)]))
 
 
-(solve 8)
+(solve (aoc/read-file 8))

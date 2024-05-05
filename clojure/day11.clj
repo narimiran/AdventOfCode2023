@@ -41,8 +41,8 @@
      empties)))
 
 
-(defn solve [input-file]
-  (let [lines (aoc/read-input input-file)
+(defn solve [input]
+  (let [lines (aoc/parse-input input)
         galaxies (find-galaxies lines)
         galaxies-x (sort (map first galaxies))
         galaxies-y (sort (map second galaxies))
@@ -56,4 +56,4 @@
      (+ distances (* multi expansions))]))
 
 
-(solve 11)
+(solve (aoc/read-file 11))

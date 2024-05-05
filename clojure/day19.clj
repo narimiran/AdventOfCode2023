@@ -67,8 +67,8 @@
 
 
 
-(defn solve [input-file]
-  (let [[wrkfls rtngs] (aoc/read-input-paragraphs input-file)
+(defn solve [input]
+  (let [[wrkfls rtngs] (aoc/parse-input-paragraphs input)
         workflows (into {} (map parse-workflow wrkfls))
         ratings (map parse-rating rtngs)
         rating-2 (zipmap [:x :m :a :s] (repeat [1 4000]))]
@@ -76,4 +76,4 @@
      (accepted-combinations workflows rating-2)]))
 
 
-(solve 19)
+(solve (aoc/read-file 19))

@@ -43,8 +43,8 @@
                    (odd? (aoc/count-if #(< % x) row-verts)))]
     1))
 
-(defn solve [input-file]
-  (let [sketch (aoc/read-input input-file :chars)
+(defn solve [input]
+  (let [sketch (aoc/parse-input input :chars)
         start (find-start sketch)
         h (count sketch)
         w (count (first sketch))
@@ -53,4 +53,4 @@
      (count (enclosed pipes verts h w))]))
 
 
-(solve 10)
+(solve (aoc/read-file 10))

@@ -44,10 +44,10 @@
        calc-score))
 
 
-(defn solve [input-file]
-  (let [hands (aoc/read-input input-file :words)]
+(defn solve [input]
+  (let [hands (aoc/parse-input input :words)]
     [(total-winnings hands false)
      (total-winnings hands true)]))
 
 
-(solve 7)
+(solve (aoc/read-file 7))

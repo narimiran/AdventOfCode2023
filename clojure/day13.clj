@@ -31,10 +31,10 @@
   (reduce + (pmap (partial find-mirror part) patterns)))
 
 
-(defn solve [input-file]
-  (let [patterns (aoc/read-input-paragraphs input-file)]
+(defn solve [input]
+  (let [patterns (aoc/parse-input-paragraphs input)]
     [(notes-sum patterns 1)
      (notes-sum patterns 2)]))
 
 
-(solve 13)
+(solve (aoc/read-file 13))

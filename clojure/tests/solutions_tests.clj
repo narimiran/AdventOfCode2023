@@ -18,8 +18,8 @@
         real-input day]
     `(deftest ~test-name
        (when ~test-results
-         (is (= (~solve-fn ~test-input) ~test-results)))
-       (is (= (~solve-fn ~real-input) ~real-results)))))
+         (is (= ~test-results (~solve-fn (aoc/read-file ~test-input)))))
+       (is (= ~real-results (~solve-fn (aoc/read-file ~real-input)))))))
 
 
 

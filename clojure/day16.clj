@@ -49,10 +49,10 @@
          (reduce max))))
 
 
-(defn solve [input-file]
-  (let [contraption (aoc/read-input input-file :chars)]
+(defn solve [input]
+  (let [contraption (aoc/parse-input input :chars)]
     [(traverse contraption 0 0 1 0)
      (max-energy contraption)]))
 
 
-(solve 16)
+(solve (aoc/read-file 16))

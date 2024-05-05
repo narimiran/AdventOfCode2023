@@ -90,12 +90,11 @@
     (reduce aoc/lcm (vals (:periods m)))))
 
 
-(defn solve [input-file]
-  (let [modules (->> (aoc/read-input input-file parse-line)
-                     (into {})
-                     init-pulses)]
-    [(part-1 modules)
-     (part-2 modules)]))
+(defn solve [input]
+  (->> (aoc/parse-input input parse-line)
+       (into {})
+       init-pulses
+       ((juxt part-1 part-2))))
 
 
-(solve 20)
+(solve (aoc/read-file 20))

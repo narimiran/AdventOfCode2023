@@ -73,8 +73,8 @@
        :start))
 
 
-(defn solve [input-file]
-  (let [[[seeds] & maps] (aoc/read-input-paragraphs input-file)
+(defn solve [input]
+  (let [[[seeds] & maps] (aoc/parse-input-paragraphs input)
         seeds-1 (aoc/integers seeds)
         seeds-2 (seed-ranges seeds-1)
         rules (map parse-maps maps)]
@@ -82,4 +82,4 @@
      (part-2 seeds-2 rules)]))
 
 
-(solve 5)
+(solve (aoc/read-file 5))
