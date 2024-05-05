@@ -3,31 +3,31 @@
 
 
 (defn find-start [sketch]
-  (key (first (aoc/grid->points sketch #(= % \S)))))
+  (key (first (aoc/grid->points sketch #{\S}))))
 
-(defn delta [[x y] [px py]]
-  [(- x px) (- y py)])
 
 (defn traverse [sketch start]
   (loop [[x y :as curr] (aoc/pt+ start [0 1])
-         prev start
-         seen #{}
-         verticals {}]
-    (let [seen' (conj seen curr)
-          [dx dy] (delta curr prev)]
+         [px py] start
+         seen (transient #{})
+         verticals (transient {})]
+    (let [seen' (conj! seen curr)
+          dx (- x px)
+          dy (- y py)
+          vy (verticals y)]
       (case ((sketch y) x)
         \S {:pipes seen'
-            :verts verticals}
+            :verts (persistent! verticals)}
         \J (recur (if (zero? dy) [x (dec y)] [(dec x) y])
-                  curr seen' (update verticals y conj x))
+                  curr seen' (assoc! verticals y (conj vy x)))
         \L (recur (if (zero? dy) [x (dec y)] [(inc x) y])
-                  curr seen' (update verticals y conj x))
+                  curr seen' (assoc! verticals y (conj vy x)))
         \7 (recur (if (zero? dy) [x (inc y)] [(dec x) y])
                   curr seen' verticals)
         \F (recur (if (zero? dy) [x (inc y)] [(inc x) y])
                   curr seen' verticals)
         \| (recur [(+ x dx) (+ y dy)]
-                  curr seen' (update verticals y conj x))
+                  curr seen' (assoc! verticals y (conj vy x)))
         \- (recur [(+ x dx) (+ y dy)]
                   curr seen' verticals)))))
 
@@ -35,8 +35,8 @@
   (for [y (range h)
         :let [row-verts (verticals y)]
         :when row-verts
-        :let [min-vert (apply min row-verts)
-              max-vert (apply max row-verts)]
+        :let [min-vert (reduce min row-verts)
+              max-vert (reduce max row-verts)]
         x (range w)
         :when (and (< min-vert x max-vert)
                    (not (seen [x y]))

@@ -17,7 +17,7 @@
 
 (defn solve [input-file]
   (let [histories (aoc/read-input input-file :ints)]
-    [(prev-sum reverse histories)
+    [(prev-sum rseq histories)
      (prev-sum identity histories)]))
 
 

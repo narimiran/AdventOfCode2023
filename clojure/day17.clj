@@ -21,8 +21,7 @@
            queue queue]
       (let [[[x y dx dy :as state] heat] (peek queue)
             queue' (pop queue)]
-        (if (and (= x end)
-                 (= y end))
+        (if (= end x y)
           heat
           (if (seen state)
             (recur seen queue')

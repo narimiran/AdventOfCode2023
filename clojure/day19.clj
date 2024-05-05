@@ -10,7 +10,7 @@
       (let [[c op & v] cnd
             k (keyword (str c))
             f ({\> > \< <} op)
-            v (parse-long (apply str v))]
+            v (parse-long (str/join v))]
         [(keyword dest) f k v]))))
 
 (defn parse-workflow [workflow]
@@ -54,7 +54,7 @@
                        (assoc rating k [a v]))))))
 
 (defn accepted-combinations [workflows rating]
-  (loop [stack [[:in rating]]
+  (loop [stack (list [:in rating])
          score 0]
     (if-let [[wf rating] (peek stack)]
       (let [stack' (pop stack)]

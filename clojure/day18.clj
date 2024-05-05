@@ -10,7 +10,7 @@
 (defn parse-line [line]
   (let [[d n c] (str/split line #" ")
         c (str/replace c #"[(#)]" "")
-        [dist dir] (map #(apply str %) (split-at 5 c))
+        [dist dir] (map str/join (split-at 5 c))
         dist (Integer/parseInt dist 16)]
     {:p1 {:dir  (deltas d)
           :dist (parse-long n)}
@@ -25,7 +25,7 @@
                     {:keys [dir dist]}]
                  (let [[dx dy] dir
                        nx (+ x (* dist dx))
-                       area (* nx (* dist dy))]
+                       area (* nx dist dy)]
                    {:x nx
                     :total (+ total area (/ dist 2))}))
                {:total 1

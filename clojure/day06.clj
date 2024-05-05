@@ -1,10 +1,11 @@
 (ns day06
   (:require aoc
-            [clojure.math :refer [sqrt ceil]]))
+            [clojure.math :refer [sqrt ceil]]
+            [clojure.string :as str]))
 
 
 (defn fix-keming [nrs]
-  (parse-long (apply str nrs)))
+  (parse-long (str/join nrs)))
 
 (defn find-root [b c]
   (/ (- b (sqrt (- (* b b) (* 4 c)))) 2))

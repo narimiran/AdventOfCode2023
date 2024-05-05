@@ -15,7 +15,7 @@
 
 (defn parse-hand [jokers? [cards bid]]
   (let [cards' (change-cards-representation cards jokers?)
-        jokers (aoc/count-if #(= \0 %) cards')
+        jokers (aoc/count-if #{\0} cards')
         card-counts (->> (str/replace cards' "0" "")
                          frequencies
                          vals

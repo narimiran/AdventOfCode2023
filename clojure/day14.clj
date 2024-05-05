@@ -6,12 +6,12 @@
 (defn rotate [platform]
   (->> platform
        aoc/transpose
-       (map #(apply str %))))
+       (map str/join)))
 
 
 (defn move-line [dir line]
   (->> (str/split line #"#" -1)
-       (map (comp #(apply str %)
+       (map (comp str/join
                   (case dir
                     :left reverse
                     :right identity)
@@ -49,8 +49,7 @@
 (defn remaining-shakes [platform prev curr]
   (let [r (- 1000000000 prev)
         to-spin (mod r (- curr prev))]
-    (-> (iterate spin-cycle platform)
-        (nth to-spin))))
+    (nth (iterate spin-cycle platform) to-spin)))
 
 
 (defn shake [platform]

@@ -15,7 +15,7 @@
 (defn empty-lines [lines]
   (keep
    (fn [[i line]]
-     (when (every? #(= % \.) line) i))
+     (when (every? #{\.} line) i))
    (map-indexed vector lines)))
 
 

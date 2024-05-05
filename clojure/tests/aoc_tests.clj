@@ -14,12 +14,12 @@
 (defn test-parsing
   ([input result] (test-parsing input nil result))
   ([input f result]
-   (is (= (aoc/parse-multiline-string input f) result))))
+   (is (= result (aoc/parse-input input f)))))
 
 (deftest parsing
   (testing "digits"
-    (is (= (aoc/string->digits "123") [1 2 3]))
-    (is (= (aoc/string->digits "ab1cd2e") [1 2])))
+    (is (= [1 2 3] (aoc/string->digits "123")))
+    (is (= [1 2] (aoc/string->digits "ab1cd2e"))))
   (testing "ints"
     (test-parsing int-lines         ["123" "-456" "789"])
     (test-parsing int-lines :int    [123 -456 789])
@@ -34,17 +34,17 @@
   (testing "custom func"
     (test-parsing int-lines #(mod (abs (parse-long %)) 10) [3 6 9]))
   (testing "separators"
-    (is (= (aoc/parse-multiline-string comma-sep :words)
-           [["ab" "cd,ef" "gh"] ["ij" "kl,mn" "op"]]))
-    (is (= (aoc/parse-multiline-string comma-sep :words {:word-sep #","})
-           [["ab cd" "ef gh"] ["ij kl" "mn op"]]))
-    (is (= (aoc/parse-multiline-string comma-sep :words {:word-sep #",| "})
-           [["ab" "cd" "ef" "gh"] ["ij" "kl" "mn" "op"]])))
+    (is (= [["ab" "cd,ef" "gh"] ["ij" "kl,mn" "op"]]
+           (aoc/parse-input comma-sep :words)))
+    (is (= [["ab cd" "ef gh"] ["ij kl" "mn op"]]
+           (aoc/parse-input comma-sep :words {:word-sep #","})))
+    (is (= [["ab" "cd" "ef" "gh"] ["ij" "kl" "mn" "op"]]
+           (aoc/parse-input comma-sep :words {:word-sep #",| "}))))
   (testing "pragraphs"
-    (is (= (aoc/parse-multiline-string int-paragraphs nil {:nl-sep #"\n\n"})
-           ["1,2\n3,4" "5,6\n7,8"]))
-    (is (= (aoc/parse-multiline-string int-paragraphs :ints {:nl-sep #"\n\n"})
-           [[1 2 3 4] [5 6 7 8]]))))
+    (is (= ["1,2\n3,4" "5,6\n7,8"]
+           (aoc/parse-input int-paragraphs nil {:nl-sep #"\n\n"})))
+    (is (= [[1 2 3 4] [5 6 7 8]]
+           (aoc/parse-input int-paragraphs :ints {:nl-sep #"\n\n"})))))
 
 
 
@@ -52,12 +52,12 @@
 (def pt2 [7 -5])
 
 (defn test-neighbours [pt amount result]
-  (is (= (aoc/neighbours pt amount) result)))
+  (is (= result (aoc/neighbours pt amount))))
 
 (deftest points
-  (is (= (aoc/manhattan pt2) 12))
-  (is (= (aoc/manhattan pt1 pt2) 13))
-  (is (= (aoc/pt+ pt1 pt2) [9 -2]))
+  (is (= 12 (aoc/manhattan pt2)))
+  (is (= 13 (aoc/manhattan pt1 pt2)))
+  (is (= [9 -2] (aoc/pt+ pt1 pt2)))
 
   (test-neighbours pt1 4 '(      [2 2]
                            [1 3]       [3 3]
@@ -81,7 +81,7 @@
 (def walls {[0 0] \# , [2 1] \# , [0 2] \# , [1 2] \#})
 
 (deftest vec->map
-  (is (= (aoc/grid->points grid #{\#}) walls)))
+  (is (= walls (aoc/grid->points grid #{\#}))))
 
 
 
@@ -93,27 +93,27 @@
     (is (aoc/none? odd? evens))
     (is (not (aoc/none? odd? stevens))))
   (testing "count-if"
-    (is (= (aoc/count-if even? evens) 6))
-    (is (= (aoc/count-if odd? evens) 0))
-    (is (= (aoc/count-if even? stevens) 4))
-    (is (= (aoc/count-if odd? stevens) 1)))
+    (is (= 6 (aoc/count-if even? evens)))
+    (is (zero? (aoc/count-if odd? evens)))
+    (is (= 4 (aoc/count-if even? stevens)))
+    (is (= 1 (aoc/count-if odd? stevens))))
   (testing "find-first"
-    (is (= (aoc/find-first even? evens) 2))
+    (is (= 2 (aoc/find-first even? evens)))
     (is (nil? (aoc/find-first odd? evens)))
-    (is (= (aoc/find-first odd? stevens) 21))))
+    (is (= 21 (aoc/find-first odd? stevens)))))
 
 
 (deftest gcd-lcm
   (testing "gcd"
-    (is (= (aoc/gcd 2 3) 1))
-    (is (= (aoc/gcd 4 12) 4))
-    (is (= (aoc/gcd 25 15) 5))
-    (is (= (aoc/gcd 7 17) 1)))
+    (is (= 1 (aoc/gcd 2 3)))
+    (is (= 4 (aoc/gcd 4 12)))
+    (is (= 5 (aoc/gcd 25 15)))
+    (is (= 1 (aoc/gcd 7 17))))
   (testing "lcm"
-    (is (= (aoc/lcm 2 3) 6))
-    (is (= (aoc/lcm 4 12) 12))
-    (is (= (aoc/lcm 25 15) 75))
-    (is (= (aoc/lcm 7 17) (* 7 17)))))
+    (is (= 6 (aoc/lcm 2 3)))
+    (is (= 12 (aoc/lcm 4 12)))
+    (is (= 75 (aoc/lcm 25 15)))
+    (is (= (* 7 17) (aoc/lcm 7 17)))))
 
 
 

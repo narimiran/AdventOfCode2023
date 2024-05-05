@@ -3,7 +3,7 @@
             [clojure.string :as str]))
 
 
-(def digits (set (apply str (range 10))))
+(def digits (set (str/join (range 10))))
 
 (defn symbol-coords [grid]
   (set (keys (remove #(digits (val %)) grid))))
