@@ -11,7 +11,7 @@
 
 (defn gear-ratios [gear-values]
   (keep
-   #(when (= (count %) 2)
+   #(when (= 2 (count %))
       (reduce * %))
    gear-values))
 

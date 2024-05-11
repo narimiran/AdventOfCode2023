@@ -23,9 +23,9 @@
      (fn [amounts line]
        (let [copies (amounts line)]
          (reduce (fn [amounts delta]
-                   (update amounts (+ line delta 1) + copies))
+                   (update amounts (+ line delta) + copies))
                  amounts
-                 (range (winners line)))))
+                 (range 1 (inc (winners line))))))
      (vec (repeat size 1))
      (range size))))
 

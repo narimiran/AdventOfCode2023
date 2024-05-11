@@ -42,14 +42,14 @@
 
 
 (defn solve [input]
-  (let [lines (aoc/parse-input input)
-        galaxies (find-galaxies lines)
+  (let [lines      (aoc/parse-input input)
+        galaxies   (find-galaxies lines)
         galaxies-x (sort (map first galaxies))
         galaxies-y (sort (map second galaxies))
         empty-rows (empty-lines lines)
         empty-cols (empty-lines (aoc/transpose lines))
-        distances (+ (calc-dist galaxies-x)
-                     (calc-dist galaxies-y))
+        distances  (+ (calc-dist galaxies-x)
+                      (calc-dist galaxies-y))
         expansions (+ (expansion galaxies-x empty-cols)
                       (expansion galaxies-y empty-rows))]
     [(+ distances expansions)

@@ -19,11 +19,9 @@
 
 
 (defn solve [input]
-  (let [[times distances] (aoc/parse-input input :ints)
-        time-2 (fix-keming times)
-        distance-2 (fix-keming distances)]
-    [(transduce (map find-winners) * (zipmap times distances))
-     (find-winners [time-2 distance-2])]))
+  (let [document (aoc/parse-input input :ints)]
+    [(transduce (map find-winners) * (aoc/transpose document))
+     (find-winners (mapv fix-keming document))]))
 
 
 (solve (aoc/read-file 6))

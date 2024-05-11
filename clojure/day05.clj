@@ -3,9 +3,9 @@
 
 
 (defn parse-line [line]
-  (let [[dest src rng] (aoc/integers line)]
+  (let [[dest src len] (aoc/integers line)]
     {:lo   src
-     :hi   (+ src (dec rng))
+     :hi   (+ src (dec len))
      :diff (- dest src)}))
 
 (defn parse-maps [maps]
@@ -14,10 +14,11 @@
        (sort-by :lo)))
 
 (defn seed-ranges [seeds]
-  (->> (for [[st rng] (partition 2 seeds)]
-         {:start st
-          :stop (+ st (dec rng))})
-       (sort-by :start)))
+  (sort-by
+   :start
+   (for [[start len] (partition 2 seeds)]
+     {:start start
+      :stop (+ start (dec len))})))
 
 
 (defn convert-number [rules src]

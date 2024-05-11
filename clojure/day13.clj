@@ -6,7 +6,7 @@
   (aoc/count-if false? (map = a b)))
 
 
-(defn is-mirror? [part pattern nrettap line]
+(defn mirror? [part pattern nrettap line]
   (let [before (take-last line nrettap)
         after (drop line pattern)
         diffs (map differences before after)]
@@ -17,7 +17,7 @@
 
 (defn mirror-line [part pattern]
   (aoc/find-first
-   (partial is-mirror? part pattern (rseq pattern))
+   (partial mirror? part pattern (rseq pattern))
    (range 1 (count pattern))))
 
 
