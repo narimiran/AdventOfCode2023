@@ -52,7 +52,7 @@
 (def pt2 [7 -5])
 
 (defn test-neighbours [pt amount result]
-  (is (= result (aoc/neighbours pt amount))))
+  (is (= result (aoc/neighbours amount pt))))
 
 (deftest points
   (is (= 12 (aoc/manhattan pt2)))

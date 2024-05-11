@@ -72,7 +72,7 @@
    (and (< -1 x size-x)
         (< -1 y size-y))))
 
-(defn neighbours ^longs [[^long x ^long y] ^long amount]
+(defn neighbours ^longs [^long amount [^long x ^long y]]
   (for [^long dy [-1 0 1]
         ^long dx [-1 0 1]
         :when
