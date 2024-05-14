@@ -14,17 +14,17 @@
 
 
 (defn parse-hand [jokers? [cards bid]]
-  (let [cards' (change-cards-representation cards jokers?)
-        jokers (aoc/count-if #{\0} cards')
+  (let [cards'      (change-cards-representation cards jokers?)
+        jokers      (aoc/count-if #{\0} cards')
         card-counts (->> (str/replace cards' "0" "")
                          frequencies
                          vals
                          (sort >)
                          vec)
-        hand-type (match card-counts
-                    []        [jokers 0]
-                    [x]       [(+ jokers x) 0]
-                    [x y & _] [(+ jokers x) y])]
+        hand-type   (match card-counts
+                      []        [jokers 0]
+                      [x]       [(+ jokers x) 0]
+                      [x y & _] [(+ jokers x) y])]
     [hand-type cards' (parse-long bid)]))
 
 
@@ -38,7 +38,7 @@
 
 (defn total-winnings [hands jokers?]
   (->> hands
-       (map (partial parse-hand jokers?))
+       (map #(parse-hand jokers? %))
        sort
        (into [[0 "" 0]]) ; to have ranks start at 1
        calc-score))

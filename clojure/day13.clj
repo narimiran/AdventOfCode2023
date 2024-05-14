@@ -8,8 +8,8 @@
 
 (defn mirror? [part pattern nrettap line]
   (let [before (take-last line nrettap)
-        after (drop line pattern)
-        diffs (map differences before after)]
+        after  (drop line pattern)
+        diffs  (map differences before after)]
     (case part
       1 (every? zero? diffs)
       2 (= 1 (reduce + diffs)))))
@@ -17,7 +17,7 @@
 
 (defn mirror-line [part pattern]
   (aoc/find-first
-   (partial mirror? part pattern (rseq pattern))
+   #(mirror? part pattern (rseq pattern) %)
    (range 1 (count pattern))))
 
 
@@ -28,7 +28,7 @@
 
 
 (defn notes-sum [patterns part]
-  (reduce + (pmap (partial find-mirror part) patterns)))
+  (reduce + (pmap #(find-mirror part %) patterns)))
 
 
 (defn solve [input]

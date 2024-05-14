@@ -21,7 +21,7 @@
 
 (defn ghost-steps [instrs network starts]
   (transduce
-   (map (partial steps instrs network))
+   (map #(steps instrs network %))
    aoc/lcm
    starts))
 
@@ -29,8 +29,8 @@
 (defn solve [input]
   (let [[[instrs'] network'] (aoc/parse-input-paragraphs input)
         network (parse-network network')
-        instrs (mapv (comp keyword str) instrs')
-        starts (filter #(str/ends-with? % "A") (keys network))]
+        instrs  (mapv (comp keyword str) instrs')
+        starts  (filter #(str/ends-with? % "A") (keys network))]
     [(steps instrs network :AAA)
      (ghost-steps instrs network starts)]))
 

@@ -7,8 +7,8 @@
 
 (defn find-galaxies [lines]
   (for [[y line] (map-indexed vector lines)
-        [x chr] (map-indexed vector line)
-        :when (= chr \#)]
+        [x chr]  (map-indexed vector line)
+        :when    (= chr \#)]
     [x y]))
 
 
@@ -25,7 +25,7 @@
                  (-> acc
                      (update :sum + (* coeff coord))
                      (update :coeff + 2)))
-               {:sum 0
+               {:sum   0
                 :coeff (- 1 (count galaxies))})
        :sum))
 
@@ -35,7 +35,7 @@
     (reduce
      (fn [acc coord]
        (let [before (count (take-while #(< % coord) galaxies))
-             after (- total before)]
+             after  (- total before)]
          (+ acc (* before after))))
      0
      empties)))

@@ -13,17 +13,17 @@
   (->> (str/split line #"#" -1)
        (map (comp str/join
                   (case dir
-                    :left reverse
+                    :left  reverse
                     :right identity)
                   sort))
        (str/join "#")))
 
 
 (defn move-east [platform]
-  (pmap (partial move-line :right) platform))
+  (pmap #(move-line :right %) platform))
 
 (defn move-west [platform]
-  (pmap (partial move-line :left) platform))
+  (pmap #(move-line :left %) platform))
 
 (defn move-north [platform]
   (-> platform rotate move-west rotate))
@@ -37,7 +37,7 @@
 
 (defn calc-score [platform]
   (let [platform (vec platform)
-        size (count platform)]
+        size     (count platform)]
     (reduce
      (fn [acc n]
        (+ acc (* (- size n)
@@ -47,8 +47,8 @@
 
 
 (defn remaining-shakes [platform prev curr]
-  (let [r (- 1000000000 prev)
-        to-spin (mod r (- curr prev))]
+  (let [remain  (- 1000000000 prev)
+        to-spin (mod remain (- curr prev))]
     (nth (iterate spin-cycle platform) to-spin)))
 
 

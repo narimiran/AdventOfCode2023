@@ -72,7 +72,7 @@
         workflows (into {} (map parse-workflow wrkfls))
         ratings (map parse-rating rtngs)
         rating-2 (zipmap [:x :m :a :s] (repeat [1 4000]))]
-    [(reduce + (map (partial accepted workflows) ratings))
+    [(reduce + (map #(accepted workflows %) ratings))
      (accepted-combinations workflows rating-2)]))
 
 

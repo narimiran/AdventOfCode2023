@@ -8,8 +8,8 @@
 
 (defn traverse [sketch start]
   (loop [[x y :as curr] (aoc/pt+ start [0 1])
-         [px py] start
-         seen (transient #{})
+         [px py]   start
+         seen      (transient #{})
          verticals (transient {})]
     (let [seen' (conj! seen curr)
           dx (- x px)
@@ -32,12 +32,12 @@
                   curr seen' verticals)))))
 
 (defn enclosed [seen verticals h w]
-  (for [y (range h)
-        :let [row-verts (verticals y)]
+  (for [y     (range h)
+        :let  [row-verts (verticals y)]
         :when row-verts
-        :let [min-vert (reduce min row-verts)
+        :let  [min-vert (reduce min row-verts)
               max-vert (reduce max row-verts)]
-        x (range w)
+        x     (range w)
         :when (and (< min-vert x max-vert)
                    (not (seen [x y]))
                    (odd? (aoc/count-if #(< % x) row-verts)))]
@@ -45,9 +45,9 @@
 
 (defn solve [input]
   (let [sketch (aoc/parse-input input :chars)
-        start (find-start sketch)
-        h (count sketch)
-        w (count (first sketch))
+        start  (find-start sketch)
+        h      (count sketch)
+        w      (count (first sketch))
         {:keys [pipes verts]} (traverse sketch start)]
     [(/ (count pipes) 2)
      (count (enclosed pipes verts h w))]))

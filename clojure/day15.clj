@@ -37,13 +37,13 @@
 
 
 (defn focusing-power [boxes]
-  (reduce + (for [[i box] (map-indexed vector boxes)
+  (reduce + (for [[i box]       (map-indexed vector boxes)
                   [j [_ focal]] (map-indexed vector box)]
               (* (inc i) (inc j) focal))))
 
 
 (defn solve [input]
-  (let [steps (aoc/parse-input-line input :words #",")
+  (let [steps        (aoc/parse-input-line input :words #",")
         instructions (map parse-instruction steps)]
     [(reduce + (map word-hash steps))
      (focusing-power (hashmap instructions))]))

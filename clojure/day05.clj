@@ -65,8 +65,7 @@
 
 
 (defn part-1 [seeds maps]
-  (->> (reduce convert-1 seeds maps)
-       (reduce min)))
+  (reduce min (reduce convert-1 seeds maps)))
 
 (defn part-2 [seeds maps]
   (->> (reduce convert-2 seeds maps)
@@ -76,9 +75,9 @@
 
 (defn solve [input]
   (let [[[seeds] & maps] (aoc/parse-input-paragraphs input)
-        seeds-1 (aoc/integers seeds)
-        seeds-2 (seed-ranges seeds-1)
-        rules (map parse-maps maps)]
+        seeds-1          (aoc/integers seeds)
+        seeds-2          (seed-ranges seeds-1)
+        rules            (map parse-maps maps)]
     [(part-1 seeds-1 rules)
      (part-2 seeds-2 rules)]))
 

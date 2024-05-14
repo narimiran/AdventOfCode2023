@@ -1,26 +1,27 @@
 (ns day20
   (:require aoc
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [better-cond.core :as b]))
 
 
 (defn extract-name [src]
   (keyword (str/replace src #"%|&" "")))
 
 (defn parse-line [line]
-  (let [[src dest] (str/split line #" -> ")
+  (let [[src dest]   (str/split line #" -> ")
         destinations (mapv keyword (str/split dest #", "))
-        amt (count destinations)]
+        amt          (count destinations)]
     (case (first src)
-      \b [:broadcaster {:typ :b
+      \b [:broadcaster {:typ  :b
                         :dest destinations
-                        :amt (inc amt)}]
-      \% [(extract-name src) {:typ :%
-                              :dest destinations
-                              :amt amt
+                        :amt  (inc amt)}]
+      \% [(extract-name src) {:typ   :%
+                              :dest  destinations
+                              :amt   amt
                               :pulse 0}]
-      \& [(extract-name src) {:typ :&
-                              :dest destinations
-                              :amt amt
+      \& [(extract-name src) {:typ    :&
+                              :dest   destinations
+                              :amt    amt
                               :pulses {}}])))
 
 (defn init-pulses [modules]
@@ -39,45 +40,47 @@
   (loop [queue (conj aoc/empty-queue [:button :broadcaster 0])
          state state]
     (if-let [[from curr v] (peek queue)]
-      (let [queue' (pop queue)
-            {:keys [typ dest amt pulse pulses]} ((:modules state) curr)]
-        (cond
-          (or (nil? typ)
-              (and (= typ :%) (= v 1)))
-          (recur queue' state)
+      #_{:clj-kondo/ignore [:unresolved-symbol]}
+      (b/cond
+        :let [queue' (pop queue)
+              {:keys [typ dest amt pulse pulses]} ((:modules state) curr)]
 
-          (= curr :broadcaster)
-          (recur (into queue' (map (fn [d] [curr d v]) dest))
-                 (update state :low-cnt + amt))
+        (or (nil? typ)
+            (and (= typ :%) (= v 1)))
+        (recur queue' state)
 
-          :else
-          (let [pulses' (assoc pulses from v)
-                pulse' (case typ
-                         :% (- 1 pulse)
-                         :& (if (not-any? zero? (vals pulses')) 0 1))
-                zp? (zero? pulse')]
-            (recur (into queue' (map (fn [d] [curr d pulse']) dest))
-                   (cond-> state
-                     (= typ :%) (assoc-in [:modules curr :pulse] pulse')
-                     (= typ :&) (assoc-in [:modules curr :pulses] pulses')
-                     zp?        (update :low-cnt  + amt)
-                     (not zp?)  (update :high-cnt + amt)
-                     (and (not zp?)
-                          (#{:ks :jf :qs :zk} curr)) ; manually found these keys
-                     (assoc-in [:periods curr] n))))))
+        (= curr :broadcaster)
+        (recur (into queue' (map (fn [d] [curr d v]) dest))
+               (update state :low-cnt + amt))
+
+        :let [pulses' (assoc pulses from v)
+              pulse' (case typ
+                       :% (- 1 pulse)
+                       :& (if (not-any? zero? (vals pulses')) 0 1))
+              zp? (zero? pulse')]
+
+        (recur (into queue' (map (fn [d] [curr d pulse']) dest))
+               (cond-> state
+                 (= typ :%) (assoc-in [:modules curr :pulse] pulse')
+                 (= typ :&) (assoc-in [:modules curr :pulses] pulses')
+                 zp?        (update :low-cnt  + amt)
+                 (not zp?)  (update :high-cnt + amt)
+                 (and (not zp?)
+                      (#{:ks :jf :qs :zk} curr)) ; manually found these keys
+                 (assoc-in [:periods curr] n))))
       state)))
 
 
 (defn push-button [times modules]
   (reduce
    (fn [state n]
-     (if (= (count (:periods state)) 4)
+     (if (= 4 (count (:periods state)))
        (reduced state)
        (traverse state (inc n))))
-   {:modules modules
-    :low-cnt 0
+   {:modules  modules
+    :low-cnt  0
     :high-cnt 0
-    :periods {}}
+    :periods  {}}
    (range times)))
 
 

@@ -28,13 +28,13 @@
     (if (empty? groups)
       (if (every? is-operational? pattern) 1 0)
       (let [[size & tl] groups
-            post (+ (reduce + tl) (count tl))
-            score (atom 0)]
-        (doseq [pre (range (inc (- (count pattern) post size)))
-                :let [[before pattern'] (split-at pre pattern)
-                      [current remaining] (split-at size pattern')]
+            post        (+ (reduce + tl) (count tl))
+            score       (atom 0)]
+        (doseq [pre    (range (inc (- (count pattern) post size)))
+                :let   [[before pattern'] (split-at pre pattern)
+                        [current remaining] (split-at size pattern')]
                 :while (every? is-operational? before)
-                :when (every? is-damaged? current)]
+                :when  (every? is-damaged? current)]
           (cond
             (empty? tl) (when (every? is-operational? remaining)
                           (swap! score inc))
@@ -45,7 +45,7 @@
 
 
 (defn solve [input]
-  (let [lines (aoc/parse-input input parse-line)
+  (let [lines    (aoc/parse-input input parse-line)
         unfolded (map unfold lines)]
     [(reduce + (map arrangements lines))
      (reduce + (pmap arrangements unfolded))]))

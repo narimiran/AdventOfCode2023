@@ -11,36 +11,34 @@
 
 
 (defn traverse [city min-straight max-straight]
-  (let [size (count city)
-        end (dec size)
+  (let [size  (count city)
+        end   (dec size)
         queue (priority-map [0 0 1 0] 0
                             [0 0 0 1] 0)]
-    (loop [seen #{}
+    (loop [seen  #{}
            queue queue]
       (let [[[x y dx dy :as state] heat] (peek queue)
-            queue' (pop queue)]
-        (if (= end x y)
-          heat
-          (if (seen state)
-            (recur seen queue')
-            (recur
-             (conj seen state)
-             (reduce
-              (fn [q [dx' dy']]
-                (reduce
-                 (fn [q n]
-                   (let [nx (+ x (* n dx'))
-                         ny (+ y (* n dy'))]
-                     (if-not (aoc/inside? size nx ny)
-                       (reduced q)
-                       (let [heat' (+ heat (heat-loss city x y dx' dy' n))
-                             state' [nx ny dx' dy']]
-                         (assoc q state' (min heat' (q state' Integer/MAX_VALUE)))))))
-                 q
-                 (range min-straight (inc max-straight))))
-              queue'
-              [[(- dy) dx]
-               [dy (- dx)]]))))))))
+            queue'                       (pop queue)]
+        (cond
+          (= end x y)  heat
+          (seen state) (recur seen queue')
+          :else (recur
+                 (conj seen state)
+                 (reduce
+                  (fn [q [dx' dy']]
+                    (reduce (fn [q n]
+                              (let [nx (+ x (* n dx'))
+                                    ny (+ y (* n dy'))]
+                                (if-not (aoc/inside? size nx ny)
+                                  (reduced q)
+                                  (let [heat'  (+ heat (heat-loss city x y dx' dy' n))
+                                        state' [nx ny dx' dy']]
+                                    (assoc q state' (min heat' (q state' Integer/MAX_VALUE)))))))
+                            q
+                            (range min-straight (inc max-straight))))
+                  queue'
+                  [[(- dy) dx]
+                   [dy (- dx)]])))))))
 
 
 (defn solve [input]

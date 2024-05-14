@@ -8,10 +8,10 @@
 
 
 (defn parse-line [line]
-  (let [[d n c] (str/split line #" ")
-        c (str/replace c #"[(#)]" "")
+  (let [[d n c]    (str/split line #" ")
+        c          (str/replace c #"[(#)]" "")
         [dist dir] (map str/join (split-at 5 c))
-        dist (Integer/parseInt dist 16)]
+        dist       (Integer/parseInt dist 16)]
     {:p1 {:dir  (deltas d)
           :dist (parse-long n)}
      :p2 {:dir  (deltas dir)
@@ -19,17 +19,17 @@
 
 
 (defn dig-trench [input]
-  ; Shoelace formula + Pick's theorem
+  ;; Shoelace formula + Pick's theorem
   (->> input
        (reduce (fn [{:keys [total x]}
                     {:keys [dir dist]}]
                  (let [[dx dy] dir
-                       nx (+ x (* dist dx))
-                       area (* nx dist dy)]
-                   {:x nx
+                       nx      (+ x (* dist dx))
+                       area    (* nx dist dy)]
+                   {:x     nx
                     :total (+ total area (/ dist 2))}))
                {:total 1
-                :x 0})
+                :x     0})
        :total
        long))
 
