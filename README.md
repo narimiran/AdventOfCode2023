@@ -57,7 +57,7 @@ Day 00: Helper file                           | [aoc.clj](clojure/aoc.clj)     |
 [Day 18](http://adventofcode.com/2023/day/18) | [day18.clj](clojure/day18.clj) | TIL about Shoelace formula and Pick's theorem.
 [Day 19](http://adventofcode.com/2023/day/19) | [day19.clj](clojure/day19.clj) | Simpler ranges than Day 5.
 [Day 20](http://adventofcode.com/2023/day/20) | [day20.clj](clojure/day20.clj) | Some manual searching through the input needed.
-<!-- [Day 21](http://adventofcode.com/2023/day/21) | [day21.clj](clojure/day21.clj) | -->
+[Day 21](http://adventofcode.com/2023/day/21) | [day21.clj](clojure/day21.clj) | Polynomial interpolation.
 <!-- [Day 22](http://adventofcode.com/2023/day/22) | [day22.clj](clojure/day22.clj) | -->
 <!-- [Day 23](http://adventofcode.com/2023/day/23) | [day23.clj](clojure/day23.clj) | -->
 <!-- [Day 24](http://adventofcode.com/2023/day/24) | [day24.clj](clojure/day24.clj) | -->
