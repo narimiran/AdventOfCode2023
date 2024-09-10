@@ -60,7 +60,7 @@ Day 00: Helper file                           | [aoc.clj](clojure/aoc.clj)     |
 [Day 21](http://adventofcode.com/2023/day/21) | [day21.clj](clojure/day21.clj) | Polynomial interpolation.
 [Day 22](http://adventofcode.com/2023/day/22) | [day22.clj](clojure/day22.clj) | Jenga!
 [Day 23](http://adventofcode.com/2023/day/23) | [day23.clj](clojure/day23.clj) | Compressing the graph for part 2.
-<!-- [Day 24](http://adventofcode.com/2023/day/24) | [day24.clj](clojure/day24.clj) | -->
+[Day 24](http://adventofcode.com/2023/day/24) | [day24.clj](clojure/day24.clj) | Don't ask me how this works.
 <!-- [Day 25](http://adventofcode.com/2023/day/25) | [day25.clj](clojure/day25.clj) | -->
 
 
