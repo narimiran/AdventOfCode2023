@@ -39,7 +39,7 @@
          [{:keys [lo hi diff]} & rem-rules :as rules] rules
          result []]
     (if (or (empty? srcs) (empty? rules))
-      (sort-by :start (into result srcs))
+      (sort-by :start (reduce conj result srcs))
       (cond
         (> start hi)          (recur srcs rem-rules result)
         (< stop lo)           (recur rem-srcs

@@ -62,7 +62,7 @@
           :R (recur stack' score)
           :A (recur stack' (+ score (reduce * (map (fn [[a b]] (- (inc b) a))
                                                    (vals rating)))))
-          (recur (into stack' (split-out (workflows wf) rating)) score)))
+          (recur (reduce conj stack' (split-out (workflows wf) rating)) score)))
       score)))
 
 
@@ -72,7 +72,7 @@
         workflows (into {} (map parse-workflow wrkfls))
         ratings (map parse-rating rtngs)
         rating-2 (zipmap [:x :m :a :s] (repeat [1 4000]))]
-    [(reduce + (map #(accepted workflows %) ratings))
+    [(aoc/sum-map #(accepted workflows %) ratings)
      (accepted-combinations workflows rating-2)]))
 
 

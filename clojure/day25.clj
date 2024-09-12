@@ -19,14 +19,15 @@
 
 (defn traverse [graph start end edge-counts]
   (loop [queue (conj aoc/empty-queue [start []])
-         seen  #{}]
+         seen  (transient #{})]
     (if-let [[curr prevs] (peek queue)]
       (cond
         (= curr end) (add-edges edge-counts (conj prevs curr))
         (seen curr)  (recur (pop queue) seen)
-        :else        (recur (into (pop queue) (map (fn [x] [x (conj prevs curr)])
-                                                   (graph curr)))
-                            (conj seen curr)))
+        :else        (recur (reduce (fn [q pt] (conj q [pt (conj prevs curr)]))
+                                    (pop queue)
+                                    (graph curr))
+                            (conj! seen curr)))
       (count seen))))
 
 (defn find-most-frequent-edges [graph]

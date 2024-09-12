@@ -45,7 +45,7 @@
 (defn solve [input]
   (let [steps        (aoc/parse-input-line input :words #",")
         instructions (map parse-instruction steps)]
-    [(reduce + (map word-hash steps))
+    [(aoc/sum-map word-hash steps)
      (focusing-power (hashmap instructions))]))
 
 

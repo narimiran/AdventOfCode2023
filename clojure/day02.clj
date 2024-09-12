@@ -31,7 +31,7 @@
   (let [lines (aoc/parse-input input :words {:word-sep #": |; |, "})
         games (map maximums lines)]
     [(reduce + (find-valid games))
-     (reduce + (map power games))]))
+     (aoc/sum-map power games)]))
 
 
 (solve (aoc/read-file 2))

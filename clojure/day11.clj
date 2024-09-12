@@ -8,7 +8,7 @@
 (defn find-galaxies [lines]
   (for [[y line] (map-indexed vector lines)
         [x chr]  (map-indexed vector line)
-        :when    (= chr \#)]
+        :when    (#{\#} chr)]
     [x y]))
 
 

@@ -28,7 +28,7 @@
 
 
 (defn notes-sum [patterns part]
-  (reduce + (pmap #(find-mirror part %) patterns)))
+  (aoc/sum-pmap #(find-mirror part %) patterns))
 
 
 (defn solve [input]

@@ -61,7 +61,7 @@
           (let [candidates (supports current)
                 vis' (conj visited current)
                 goods (filter (fn [x] (every? vis' (on-top-of x))) candidates)]
-            (recur (into stack' goods) vis')))))))
+            (recur (reduce conj stack' goods) vis')))))))
 
 
 (defn solve [input-file]
@@ -69,7 +69,7 @@
                     (sort-by third))
         {:keys [non-removables supports on-top-of]} (part-1 blocks)]
     [(- (count blocks) (count non-removables))
-     (reduce + (map #(traverse supports on-top-of %) (keys non-removables)))]))
+     (aoc/sum-map #(traverse supports on-top-of %) (keys non-removables))]))
 
 
 (solve (aoc/read-file 22))

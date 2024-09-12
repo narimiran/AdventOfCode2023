@@ -3,7 +3,7 @@
 
 
 (defn find-start [sketch]
-  (key (first (aoc/grid->points sketch #{\S}))))
+  (first (aoc/grid->point-set sketch #{\S})))
 
 
 (defn traverse [sketch start]
@@ -32,16 +32,15 @@
                   curr seen' verticals)))))
 
 (defn enclosed [seen verticals h w]
-  (for [y     (range h)
-        :let  [row-verts (verticals y)]
-        :when row-verts
-        :let  [min-vert (reduce min row-verts)
-              max-vert (reduce max row-verts)]
-        x     (range w)
-        :when (and (< min-vert x max-vert)
-                   (not (seen [x y]))
-                   (odd? (aoc/count-if #(< % x) row-verts)))]
-    1))
+  (aoc/do-count [y     (range h)
+                 :let  [row-verts (verticals y)]
+                 :when row-verts
+                 :let  [min-vert (reduce min row-verts)
+                        max-vert (reduce max row-verts)]
+                 x     (range w)
+                 :when (and (< min-vert x max-vert)
+                            (not (seen [x y]))
+                            (odd? (aoc/count-if #(< % x) row-verts)))]))
 
 (defn solve [input]
   (let [sketch (aoc/parse-input input :chars)
@@ -50,7 +49,7 @@
         w      (count (first sketch))
         {:keys [pipes verts]} (traverse sketch start)]
     [(/ (count pipes) 2)
-     (count (enclosed pipes verts h w))]))
+     (enclosed pipes verts h w)]))
 
 
 (solve (aoc/read-file 10))

@@ -9,7 +9,6 @@
      (+ acc ((city (+ y (* m dy))) (+ x (* m dx)))))
    (range (inc n))))
 
-
 (defn traverse [city min-straight max-straight]
   (let [size  (count city)
         end   (dec size)
@@ -42,9 +41,10 @@
 
 
 (defn solve [input]
-  (let [city (aoc/parse-input input :digits)]
-    [(traverse city 1 3)
-     (traverse city 4 10)]))
+  (let [city (aoc/parse-input input :digits)
+        p1 (future (traverse city 1 3))
+        p2 (future (traverse city 4 10))]
+    [@p1 @p2]))
 
 
 (solve (aoc/read-file 17))

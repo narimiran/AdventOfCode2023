@@ -33,7 +33,7 @@
 (defn solve [input]
   (let [lines   (aoc/parse-input input parse-line)
         winners (mapv winning-numbers lines)]
-    [(reduce + (map points winners))
+    [(aoc/sum-map points winners)
      (reduce + (new-rules winners))]))
 
 

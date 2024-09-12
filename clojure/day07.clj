@@ -29,11 +29,8 @@
 
 
 (defn calc-score [hands]
-  (transduce
-   (map (fn [[rank [_ _ bid]]]
-          (* rank bid)))
-   +
-   (map-indexed vector hands)))
+  (aoc/sum-map (fn [[rank [_ _ bid]]] (* rank bid))
+               (map-indexed vector hands)))
 
 
 (defn total-winnings [hands jokers?]

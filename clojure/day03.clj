@@ -31,10 +31,10 @@
     (if-let [line (first lines)]
       (let [[acc' gear-map' _]
             (reduce
-             (fn [[acc'' gear-map'' start] num]
-               (let [x (str/index-of line num start)
-                     number (parse-long num)
-                     len (count num)
+             (fn [[acc'' gear-map'' start] n]
+               (let [x (str/index-of line n start)
+                     number (parse-long n)
+                     len (count n)
                      nearby-gears (touching gears x y len)
                      near-symbs? (or (seq nearby-gears)
                                      (seq (touching symbs x y len)))]
@@ -55,7 +55,7 @@
 
 (defn solve [input]
   (let [lines    (aoc/parse-input input)
-        points   (aoc/grid->points lines #(not= % \.))
+        points   (aoc/grid->point-map lines #(not= % \.))
         symbs    (symbol-coords points)
         gears    (set (filter #(= \* (points %)) symbs))
         solution (find-solution lines symbs gears)]

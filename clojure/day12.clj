@@ -47,8 +47,8 @@
 (defn solve [input]
   (let [lines    (aoc/parse-input input parse-line)
         unfolded (map unfold lines)]
-    [(reduce + (map arrangements lines))
-     (reduce + (pmap arrangements unfolded))]))
+    [(aoc/sum-map arrangements lines)
+     (aoc/sum-pmap arrangements unfolded)]))
 
 
 (solve (aoc/read-file 12))

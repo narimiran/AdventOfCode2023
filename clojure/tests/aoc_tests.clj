@@ -88,8 +88,10 @@
 (def walls {[0 0] \# , [2 1] \# , [0 2] \# , [1 2] \#})
 
 (deftest vec->map
-  (is (= walls (aoc/grid->points grid #{\#}))))
+  (is (= walls (aoc/grid->point-map grid #{\#}))))
 
+(deftest vec->set
+  (is (= (set (keys walls)) (aoc/grid->point-set grid #{\#}))))
 
 
 (def evens [2 4 6 8 -24 156])
@@ -104,10 +106,34 @@
     (is (zero? (aoc/count-if odd? evens)))
     (is (= 4 (aoc/count-if even? stevens)))
     (is (= 1 (aoc/count-if odd? stevens))))
+  (testing "do-count"
+    (is (= 3 (aoc/do-count [x (range 3)])))
+    (is (= 3 (aoc/do-count [x (range 10)
+                            :when (< x 3)])))
+    (is (= 9 (aoc/do-count [x (range 10)
+                            :while (< x 3)
+                            y (range 10)
+                            :when (or (< y 2) (= y 9))]))))
   (testing "find-first"
     (is (= 2 (aoc/find-first even? evens)))
     (is (nil? (aoc/find-first odd? evens)))
     (is (= 21 (aoc/find-first odd? stevens)))))
+
+
+(def d {:a {:b 2}
+        :c {:d {:e 3}}})
+
+(deftest builtin-alternatives
+  (testing "update-2"
+    (is (= (update-in d [:a :b] inc)
+           (aoc/update-2 d :a :b inc))))
+  (testing "assoc-2"
+    (is (= (assoc-in d [:a :b] 5)
+           (aoc/assoc-2 d :a :b 5))))
+  (testing "assoc-3"
+    (is (= (assoc-in d [:c :d :e] 7)
+           (aoc/assoc-3 d :c :d :e 7)))))
+
 
 
 (deftest gcd-lcm

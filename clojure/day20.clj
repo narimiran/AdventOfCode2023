@@ -50,7 +50,7 @@
         (recur queue' state)
 
         (= curr :broadcaster)
-        (recur (into queue' (map (fn [d] [curr d v]) dest))
+        (recur (reduce (fn [q d] (conj q [curr d v])) queue' dest)
                (update state :low-cnt + amt))
 
         :let [pulses' (assoc pulses from v)
@@ -59,15 +59,15 @@
                        :& (if (not-any? zero? (vals pulses')) 0 1))
               zp? (zero? pulse')]
 
-        (recur (into queue' (map (fn [d] [curr d pulse']) dest))
+        (recur (reduce (fn [q d] (conj q [curr d pulse'])) queue' dest)
                (cond-> state
-                 (= typ :%) (assoc-in [:modules curr :pulse] pulse')
-                 (= typ :&) (assoc-in [:modules curr :pulses] pulses')
+                 (= typ :%) (aoc/assoc-3 :modules curr :pulse pulse')
+                 (= typ :&) (aoc/assoc-3 :modules curr :pulses pulses')
                  zp?        (update :low-cnt  + amt)
                  (not zp?)  (update :high-cnt + amt)
                  (and (not zp?)
                       (#{:ks :jf :qs :zk} curr)) ; manually found these keys
-                 (assoc-in [:periods curr] n))))
+                 (aoc/assoc-2 :periods curr n))))
       state)))
 
 

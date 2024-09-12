@@ -1,5 +1,6 @@
 (ns aoc
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [clojure.data.int-map :as i]))
 
 
 (def empty-queue clojure.lang.PersistentQueue/EMPTY)
@@ -43,9 +44,8 @@
 
 (defn parse-input-paragraphs
   [input & [parse-fn word-sep]]
-  (-> input
-      (parse-input nil {:nl-sep #"\n\n"})
-      (->> (mapv #(parse-input % parse-fn {:word-sep word-sep})))))
+  (mapv #(parse-input % parse-fn {:word-sep word-sep})
+        (parse-input input nil {:nl-sep #"\n\n"})))
 
 
 (defn transpose [matrix]
@@ -72,16 +72,19 @@
    (and (< -1 x size-x)
         (< -1 y size-y))))
 
-(defn neighbours ^longs [^long amount [^long x ^long y]]
-  (for [^long dy [-1 0 1]
-        ^long dx [-1 0 1]
-        :when
-        (case amount
-          4 (odd? (- dx dy))
-          5 (<= (+ (abs dx) (abs dy)) 1)
-          8 (not= dx dy 0)
-          9 true)]
-    [(+ x dx) (+ y dy)]))
+(defn neighbours ^longs
+  ([^long amount [^long x ^long y]] (neighbours amount [x y] identity))
+  ([^long amount [^long x ^long y] cnd]
+   (for [^long dy [-1 0 1]
+         ^long dx [-1 0 1]
+         :when (case amount
+                 4 (odd? (- dx dy))
+                 5 (<= (+ (abs dx) (abs dy)) 1)
+                 8 (not= dx dy 0)
+                 9 true)
+         :let [nb [(+ x dx) (+ y dy)]]
+         :when (cnd nb)]
+     nb)))
 
 (defn neighbours-3d [[^long x ^long y ^long z]]
   [[(dec x) y z] [(inc x) y z]
@@ -89,14 +92,43 @@
    [x y (dec z)] [x y (inc z)]])
 
 
-(defn grid->points
-  ([v] (grid->points v identity))
-  ([v pred]
-   (into {}
+
+(defn grid->point-map
+  ([v] (grid->point-map v identity nil))
+  ([v pred] (grid->point-map v pred nil))
+  ([v pred mult]
+   (into (if mult (i/int-map) {})
          (for [[y line] (map-indexed vector v)
                [x char] (map-indexed vector line)
                :when (pred char)]
-           [[x y] char]))))
+           (if mult
+             [(+ (* y mult) x) char]
+             [[x y] char])))))
+
+(defn grid->hashed-point-map
+  ([v] (grid->point-map v identity 1000))
+  ([v pred] (grid->point-map v pred 1000))
+  ([v pred mult] (grid->point-map v pred mult)))
+
+
+(defn grid->point-set
+  ([v] (grid->point-set v identity nil))
+  ([v pred] (grid->point-set v pred nil))
+  ([v pred mult]
+   (into (if mult (i/dense-int-set) #{})
+         (for [[y line] (map-indexed vector v)
+               [x char] (map-indexed vector line)
+               :when (pred char)]
+           (if mult
+             (+ (* y mult) x)
+             [x y])))))
+
+(defn grid->hashed-point-set
+  ([v] (grid->point-set v identity 1000))
+  ([v pred] (grid->point-set v pred 1000))
+  ([v pred mult] (grid->point-set v pred mult)))
+
+
 
 
 (defn none? [pred xs]
@@ -126,12 +158,43 @@
    0
    xs))
 
+(defmacro do-count
+  {:clj-kondo/lint-as 'clojure.core/doseq}
+  [seq-exprs]
+  `(let [counter# (atom 0)]
+     (doseq ~seq-exprs
+       (swap! counter# inc))
+     @counter#))
+
+(defn sum-map [f xs]
+  (transduce (map f) + xs))
+
+(defn sum-pmap [f xs]
+  (reduce + (pmap f xs)))
+
+
 (defn find-first [pred xs]
   (reduce
    (fn [_ x]
      (when (pred x) (reduced x)))
    nil
    xs))
+
+
+(defn update-2 [m k1 k2 f]
+  ;; usually faster than the `update-in` built-in
+  (let [m2 (m k1)
+        v (m2 k2)]
+    (assoc m k1 (assoc m2 k2 (f v)))))
+
+(defn assoc-2 [m k1 k2 v]
+  ;; usually faster than the `assoc-in` built-in
+  (let [m2 (m k1)]
+    (assoc m k1 (assoc m2 k2 v))))
+
+(defn assoc-3 [m k1 k2 k3 v]
+  (let [m2 (m k1)]
+    (assoc m k1 (assoc-2 m2 k2 k3 v))))
 
 
 (defn gcd

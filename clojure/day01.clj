@@ -29,9 +29,7 @@
 
 
 (defn calibration-sum [lines patt rev-patt]
-  (->> lines
-       (map #(calibration-value % patt rev-patt))
-       (reduce +)))
+  (aoc/sum-map #(calibration-value % patt rev-patt) lines))
 
 
 (defn solve [input]

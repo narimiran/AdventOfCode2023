@@ -10,9 +10,7 @@
 
 
 (defn prev-sum [transformation histories]
-  (->> histories
-       (pmap (comp extrapolate transformation))
-       (reduce +)))
+  (aoc/sum-pmap (comp extrapolate transformation) histories))
 
 
 (defn solve [input]
