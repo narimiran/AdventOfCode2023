@@ -9,32 +9,38 @@
      (+ acc ((city (+ y (* m dy))) (+ x (* m dx)))))
    (range (inc n))))
 
+(defn my-hash ^long [^long x ^long y ^long dx ^long dy]
+  (+ (* 12345 x)
+     (* 1234 y)
+     (* 123 dx)
+     dy))
+
 (defn traverse [city min-straight max-straight]
-  (let [size  (count city)
-        end   (dec size)
-        queue (priority-map [0 0 1 0] 0
-                            [0 0 0 1] 0)]
-    (loop [seen  #{}
+  (let [size     (count city)
+        end      (dec size)
+        straight (range min-straight (inc max-straight))
+        queue    (priority-map [0 0 1 0] 0
+                               [0 0 0 1] 0)]
+    (loop [seen  (transient #{})
            queue queue]
-      (let [[[x y dx dy :as state] heat] (peek queue)
-            queue'                       (pop queue)]
-        (cond
-          (= end x y)  heat
-          (seen state) (recur seen queue')
-          :else (recur
-                 (conj seen state)
+      (let [[[x y dx dy] heat] (peek queue)
+            queue'             (pop queue)]
+        (if (= end x y)
+          heat
+          (recur (conj! seen (my-hash x y dx dy))
                  (reduce
                   (fn [q [dx' dy']]
                     (reduce (fn [q n]
                               (let [nx (+ x (* n dx'))
                                     ny (+ y (* n dy'))]
-                                (if-not (aoc/inside? size nx ny)
-                                  (reduced q)
-                                  (let [heat'  (+ heat (heat-loss city x y dx' dy' n))
-                                        state' [nx ny dx' dy']]
-                                    (assoc q state' (min heat' (q state' Integer/MAX_VALUE)))))))
+                                (cond
+                                  (not (aoc/inside? size nx ny)) (reduced q)
+                                  (seen (my-hash nx ny dx' dy')) q
+                                  :else (let [heat'  (+ heat (heat-loss city x y dx' dy' n))
+                                              state' [nx ny dx' dy']]
+                                          (assoc q state' (min heat' (q state' heat')))))))
                             q
-                            (range min-straight (inc max-straight))))
+                            straight))
                   queue'
                   [[(- dy) dx]
                    [dy (- dx)]])))))))
