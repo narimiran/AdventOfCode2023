@@ -1,16 +1,21 @@
 {:paths ["clojure" "clojure/tests"]
- :deps {org.clojure/clojure {:mvn/version "1.11.3"}
-        org.clojure/core.match {:mvn/version "1.1.0"}
-        org.clojure/data.int-map {:mvn/version "1.3.0"}
-        org.clojure/core.async {:mvn/version "1.6.681"}
-        org.flatland/ordered {:mvn/version "1.15.12"}
-        org.clojure/data.priority-map {:mvn/version "1.2.0"}
-        io.github.engelberg/better-cond {:git/tag "v2.1.5" :git/sha "156bc5f"}}
+ :deps  {org.clojure/clojure             {:mvn/version "1.12.0"}
+         org.clojure/core.match          {:mvn/version "1.1.0"}
+         org.clojure/data.int-map        {:mvn/version "1.3.0"}
+         org.clojure/data.priority-map   {:mvn/version "1.2.0"}
+         org.flatland/ordered            {:mvn/version "1.15.12"}
+         io.github.engelberg/better-cond {:git/tag "v2.1.5" :git/sha "156bc5f"}}
  :aliases
- {:profile {:jvm-opts ["-Djdk.attach.allowAttachSelf"]
-            :extra-deps {criterium/criterium {:mvn/version "0.4.6"}
-                         com.clojure-goes-fast/clj-async-profiler {:mvn/version "1.2.0"}
-                         com.taoensso/tufte {:mvn/version "2.6.3"}}}
-  :viz {:extra-deps {quil/quil {:mvn/version "4.3.1563"}}}
-  :splint {:extra-deps {io.github.noahtheduke/splint {:mvn/version "1.15.2"}}
-           :main-opts ["-m" "noahtheduke.splint"]}}}
+ {:profile {:jvm-opts   ["-Djdk.attach.allowAttachSelf"]
+            :extra-deps {criterium/criterium                      {:mvn/version "0.4.6"}
+                         com.clojure-goes-fast/clj-async-profiler {:mvn/version "1.3.0"}
+                         com.taoensso/tufte                       {:mvn/version "2.6.3"}}}
+  :viz     {:extra-deps {quil/quil {:mvn/version "4.3.1563"}}}
+  :splint  {:extra-deps {io.github.noahtheduke/splint {:mvn/version "1.17.0"}}
+            :main-opts  ["-m" "noahtheduke.splint"]}
+  :debug   {:extra-deps {com.github.flow-storm/clojure        {:mvn/version "RELEASE"}
+                         com.github.flow-storm/flow-storm-dbg {:mvn/version "RELEASE"}}
+            :jvm-opts   ["-Dclojure.storm.instrumentEnable=true"
+                         "-Dclojure.storm.instrumentOnlyPrefixes=aoc,day"
+                         "-Dflowstorm.theme=dark"
+                         "-Dflowstorm.fileEditorCommand=emacsclient -n +<<LINE>>:0 <<FILE>>"]}}}
