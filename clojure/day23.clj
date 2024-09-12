@@ -18,12 +18,16 @@
         (= pt end) (recur stack' (max longest (count seen)))
 
         :let [curr  ((trails y) x)
-              seen' (conj seen pt)
-              nbs   (for [[nx ny] (aoc/neighbours 4 pt)
-                          :when   (and (not (seen [nx ny]))
-                                       (not (#{\#} ((trails ny) nx))))]
-                      [[nx ny] seen'])]
-        (= curr \.) (recur (into stack' nbs) longest)
+              seen' (conj seen pt)]
+        (= curr \.) (let [nbs (aoc/neighbours
+                               4 pt
+                               (fn [[nx ny]]
+                                 (and (not (seen [nx ny]))
+                                      (not (#{\#} ((trails ny) nx))))))]
+                      (recur (reduce (fn [s nb] (conj s [nb seen']))
+                                     stack'
+                                     nbs)
+                             longest))
 
         :let [pt' (if (= curr \>) [(inc x) y] [x (inc y)])]
         (seen pt') (recur stack' longest)
@@ -31,19 +35,17 @@
         (recur (conj stack' [pt' seen']) longest)))))
 
 
-
-(defn int-hash [x y]
-  (+ (* 150 x) y))
-
 (defn compress-graph [trails]
   (let [adjacencies (atom (i/int-map))
-        size        (count trails)]
+        size        (count trails)
+        int-hash    (fn [x y] (+ (* 150 x) y))]
     (doseq [[y row] (map-indexed vector trails)
             [x c]   (map-indexed vector row)
             :when   (not= \# c)
-            [nx ny] (aoc/neighbours 4 [x y])
-            :when   (and (aoc/inside? size nx ny)
-                         (not= \# ((trails ny) nx)))]
+            [nx ny] (aoc/neighbours 4 [x y]
+                                    (fn [[nx ny]]
+                                      (and (aoc/inside? size nx ny)
+                                           (not= \# ((trails ny) nx)))))]
       (swap! adjacencies update (int-hash x y) assoc (int-hash nx ny) 1))
     (doseq [pt    (keys @adjacencies)
             :let  [nbs (@adjacencies pt)]
@@ -74,24 +76,27 @@
               seen' (conj seen pt)]
         (= pt exit) (recur stack' (max longest score))
 
-        (recur (into stack'
-                     (for [[nb cost] (adjacencies pt)
-                           :when (not (seen nb))
-                           :when (if (= 3 (count (adjacencies pt)))
-                                   ;; if on a perimeter, go only right and down
-                                   ;; makes everything 3x faster
-                                   (or (> nb pt)
-                                       (> (mod nb 150) (mod pt 150)))
-                                   true)]
-                       [nb seen' (+ score cost)]))
+        (recur (reduce (fn [s [nb cost]]
+                         (if (and (not (seen nb))
+                                  (if (= 3 (count (adjacencies pt)))
+                                    ;; if on a perimeter, go only right and down
+                                    ;; makes everything 3x faster
+                                    (or (> nb pt)
+                                        (> (mod nb 150) (mod pt 150)))
+                                    true))
+                           (conj s [nb seen' (+ score cost)])
+                           s))
+                       stack'
+                       (adjacencies pt))
                longest)))))
 
 
 (defn solve [input-file]
   (let [trails (aoc/parse-input input-file :chars)
-        adjacencies (compress-graph trails)]
-    [(part-1 trails)
-     (part-2 adjacencies)]))
+        adjacencies (compress-graph trails)
+        p1 (future (part-1 trails))
+        p2 (future (part-2 adjacencies))]
+    [@p1 @p2]))
 
 
 (solve (aoc/read-file 23))
