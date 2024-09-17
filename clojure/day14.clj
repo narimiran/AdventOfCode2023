@@ -3,11 +3,8 @@
             [clojure.string :as str]))
 
 
-(defn rotate [platform]
-  (->> platform
-       aoc/transpose
-       (map str/join)))
-
+(defn transpose [platform]
+  (apply map str platform))
 
 (defn move-line [dir line]
   (->> (str/split line #"#" -1)
@@ -20,16 +17,16 @@
 
 
 (defn move-east [platform]
-  (pmap #(move-line :right %) platform))
+  (vec (pmap #(move-line :right %) platform)))
 
 (defn move-west [platform]
-  (pmap #(move-line :left %) platform))
+  (vec (pmap #(move-line :left %) platform)))
 
 (defn move-north [platform]
-  (-> platform rotate move-west rotate))
+  (-> platform transpose move-west transpose))
 
 (defn move-south [platform]
-  (-> platform rotate move-east rotate))
+  (-> platform transpose move-east transpose))
 
 (defn spin-cycle [platform]
   (-> platform move-north move-west move-south move-east))
@@ -38,11 +35,9 @@
 (defn calc-score [platform]
   (let [platform (vec platform)
         size     (count platform)]
-    (reduce
-     (fn [acc n]
-       (+ acc (* (- size n)
-                 (aoc/count-if #{\O} (platform n)))))
-     0
+    (aoc/sum-map
+     (fn [n] (* (- size n)
+                (aoc/count-if #{\O} (platform n))))
      (range size))))
 
 
