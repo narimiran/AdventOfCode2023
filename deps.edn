@@ -4,12 +4,21 @@
          org.clojure/data.int-map        {:mvn/version "1.3.0"}
          org.clojure/data.priority-map   {:mvn/version "1.2.0"}
          org.flatland/ordered            {:mvn/version "1.15.12"}
-         io.github.engelberg/better-cond {:git/tag "v2.1.5" :git/sha "156bc5f"}}
+         io.github.engelberg/better-cond {:git/tag "v2.1.5" :git/sha "156bc5f"}
+         io.github.nextjournal/clerk     {:git/sha "a6dc483ffea2a8ecf5c2725dea6df72efbc39eee"}}
  :aliases
  {:profile {:jvm-opts   ["-Djdk.attach.allowAttachSelf"]
             :extra-deps {criterium/criterium                      {:mvn/version "0.4.6"}
                          com.clojure-goes-fast/clj-async-profiler {:mvn/version "1.3.0"}
                          com.taoensso/tufte                       {:mvn/version "2.6.3"}}}
+  :nextjournal/clerk {:exec-fn nextjournal.clerk/build!
+                      :exec-args {:paths ["clojure/day01_clerk.clj"
+                                          "clojure/day02.clj"]
+                                  #_#_:compile-css true
+                                  #_#_:package :single-file}
+                      #_#_:main-opts ["-m" "babashka.cli.exec"]
+                      #_#_:extra-deps {org.slf4j/slf4j-nop {:mvn/version "2.0.16"}
+                                       org.babashka/cli {:mvn/version "0.8.60"}}}
   :viz     {:extra-deps {quil/quil {:mvn/version "4.3.1563"}}}
   :splint  {:extra-deps {io.github.noahtheduke/splint {:mvn/version "1.17.0"}}
             :main-opts  ["-m" "noahtheduke.splint"]}

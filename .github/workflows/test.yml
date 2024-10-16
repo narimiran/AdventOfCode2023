@@ -49,3 +49,29 @@ jobs:
       - name: Benchmark solutions
         if : ${{ matrix.kind == 'benchmark' }}
         run: clojure -M:profile clojure/tests/solutions_benchmark.clj
+
+      - name: Clerk Cache
+        uses: actions/cache@v2
+        with:
+          path: .cache
+          key: ${{ runner.os }}-clerk
+
+      - name: Clerk Build
+        run: clojure -X:nextjournal/clerk
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # Upload entire repository
+          path: 'public/build'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
