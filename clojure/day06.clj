@@ -1,5 +1,5 @@
 (ns day06
-  (:require aoc
+  (:require [aoc-utils.core :as aoc]
             [clojure.math :refer [sqrt ceil]]
             [clojure.string :as str]))
 
@@ -19,9 +19,9 @@
 
 
 (defn solve [input]
-  (let [document (aoc/parse-input input :ints)]
+  (let [document (aoc/parse-lines input :ints)]
     [(transduce (map find-winners) * (aoc/transpose document))
      (find-winners (mapv fix-keming document))]))
 
 
-(solve (aoc/read-file 6))
+(solve (aoc/read-input 6))

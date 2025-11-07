@@ -1,5 +1,5 @@
 (ns day05
-  (:require aoc))
+  (:require [aoc-utils.core :as aoc]))
 
 
 (defn parse-line [line]
@@ -74,7 +74,7 @@
 
 
 (defn solve [input]
-  (let [[[seeds] & maps] (aoc/parse-input-paragraphs input)
+  (let [[[seeds] & maps] (aoc/parse-paragraphs input)
         seeds-1          (aoc/integers seeds)
         seeds-2          (seed-ranges seeds-1)
         rules            (map parse-maps maps)]
@@ -82,4 +82,4 @@
      (part-2 seeds-2 rules)]))
 
 
-(solve (aoc/read-file 5))
+(solve (aoc/read-input 5))

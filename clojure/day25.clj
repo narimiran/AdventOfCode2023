@@ -1,5 +1,5 @@
 (ns day25
-  (:require aoc))
+  (:require [aoc-utils.core :as aoc]))
 
 
 (defn build-graph [components]
@@ -34,7 +34,7 @@
   (reduce (fn [edge-counts [start end]]
             (traverse graph start end edge-counts))
           {}
-          (repeatedly 200 #(shuffle (keys graph)))))
+          (repeatedly 300 #(shuffle (keys graph)))))
 
 (defn remove-most-frequent [edge-counts graph]
   (let [most-frequent (keys (take 3 (sort-by val > edge-counts)))]
@@ -54,9 +54,9 @@
 
 
 (defn solve [input-file]
-  (let [components (aoc/parse-input input-file :words {:word-sep #": | "})
+  (let [components (aoc/parse-lines input-file :words {:word-sep #": | "})
         graph      (build-graph components)]
     (find-groups graph)))
 
 
-(solve (aoc/read-file 25))
+(solve (aoc/read-input 25))

@@ -1,5 +1,5 @@
 (ns day07
-  (:require aoc
+  (:require [aoc-utils.core :as aoc]
             [clojure.string :as str]
             [clojure.core.match :refer [match]]))
 
@@ -42,9 +42,9 @@
 
 
 (defn solve [input]
-  (let [hands (aoc/parse-input input :words)]
+  (let [hands (aoc/parse-lines input :words)]
     [(total-winnings hands false)
      (total-winnings hands true)]))
 
 
-(solve (aoc/read-file 7))
+(solve (aoc/read-input 7))

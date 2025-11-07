@@ -1,5 +1,5 @@
 (ns day10
-  (:require aoc))
+  (:require [aoc-utils.core :as aoc]))
 
 
 (defn find-start [sketch]
@@ -43,7 +43,7 @@
                             (odd? (aoc/count-if #(< % x) row-verts)))]))
 
 (defn solve [input]
-  (let [sketch (aoc/parse-input input :chars)
+  (let [sketch (aoc/parse-lines input :chars)
         start  (find-start sketch)
         h      (count sketch)
         w      (count (first sketch))
@@ -52,4 +52,4 @@
      (enclosed pipes verts h w)]))
 
 
-(solve (aoc/read-file 10))
+(solve (aoc/read-input 10))

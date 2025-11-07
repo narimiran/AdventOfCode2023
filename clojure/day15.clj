@@ -1,5 +1,5 @@
 (ns day15
-  (:require aoc
+  (:require [aoc-utils.core :as aoc]
             [flatland.ordered.map :refer [ordered-map]]
             [clojure.string :as str]))
 
@@ -43,10 +43,10 @@
 
 
 (defn solve [input]
-  (let [steps        (aoc/parse-input-line input :words #",")
+  (let [steps        (aoc/parse-input input :words #",")
         instructions (map parse-instruction steps)]
     [(aoc/sum-map word-hash steps)
      (focusing-power (hashmap instructions))]))
 
 
-(solve (aoc/read-file 15))
+(solve (aoc/read-input 15))

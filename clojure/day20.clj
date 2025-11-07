@@ -1,5 +1,5 @@
 (ns day20
-  (:require aoc
+  (:require [aoc-utils.core :as aoc]
             [clojure.string :as str]
             [better-cond.core :as b]))
 
@@ -94,10 +94,10 @@
 
 
 (defn solve [input]
-  (->> (aoc/parse-input input parse-line)
+  (->> (aoc/parse-lines input parse-line)
        (into {})
        init-pulses
        ((juxt part-1 part-2))))
 
 
-(solve (aoc/read-file 20))
+(solve (aoc/read-input 20))

@@ -1,5 +1,5 @@
 (ns day12
-  (:require aoc
+  (:require [aoc-utils.core :as aoc]
             [clojure.string :as str]))
 
 
@@ -45,10 +45,10 @@
 
 
 (defn solve [input]
-  (let [lines    (aoc/parse-input input parse-line)
+  (let [lines    (aoc/parse-lines input parse-line)
         unfolded (map unfold lines)]
     [(aoc/sum-map arrangements lines)
      (aoc/sum-pmap arrangements unfolded)]))
 
 
-(solve (aoc/read-file 12))
+(solve (aoc/read-input 12))

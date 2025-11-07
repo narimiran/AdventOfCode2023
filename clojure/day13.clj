@@ -1,5 +1,5 @@
 (ns day13
-  (:require aoc))
+  (:require [aoc-utils.core :as aoc]))
 
 
 (defn differences [a b]
@@ -32,9 +32,9 @@
 
 
 (defn solve [input]
-  (let [patterns (aoc/parse-input-paragraphs input)]
+  (let [patterns (aoc/parse-paragraphs input)]
     [(notes-sum patterns 1)
      (notes-sum patterns 2)]))
 
 
-(solve (aoc/read-file 13))
+(solve (aoc/read-input 13))

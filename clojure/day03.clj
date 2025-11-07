@@ -1,5 +1,5 @@
 (ns day03
-  (:require aoc
+  (:require [aoc-utils.core :as aoc]
             [clojure.string :as str]))
 
 
@@ -54,7 +54,7 @@
 
 
 (defn solve [input]
-  (let [lines    (aoc/parse-input input)
+  (let [lines    (aoc/parse-lines input)
         points   (aoc/grid->point-map lines #(not= % \.))
         symbs    (symbol-coords points)
         gears    (set (filter #(= \* (points %)) symbs))
@@ -62,4 +62,4 @@
     ((juxt :num-sum :gear-ratios) solution)))
 
 
-(solve (aoc/read-file 3))
+(solve (aoc/read-input 3))

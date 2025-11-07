@@ -1,5 +1,5 @@
 (ns day22
-  (:require aoc))
+  (:require [aoc-utils.core :as aoc]))
 
 
 (defn third [[_ _ z]] z)
@@ -65,11 +65,11 @@
 
 
 (defn solve [input-file]
-  (let [blocks (->> (aoc/parse-input input-file :ints)
+  (let [blocks (->> (aoc/parse-lines input-file :ints)
                     (sort-by third))
         {:keys [non-removables supports on-top-of]} (part-1 blocks)]
     [(- (count blocks) (count non-removables))
      (aoc/sum-map #(traverse supports on-top-of %) (keys non-removables))]))
 
 
-(solve (aoc/read-file 22))
+(solve (aoc/read-input 22))

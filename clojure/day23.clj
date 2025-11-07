@@ -1,5 +1,5 @@
 (ns day23
-  (:require aoc
+  (:require [aoc-utils.core :as aoc]
             [better-cond.core :as b]
             [clojure.data.int-map :as i]))
 
@@ -92,11 +92,11 @@
 
 
 (defn solve [input-file]
-  (let [trails (aoc/parse-input input-file :chars)
+  (let [trails (aoc/parse-lines input-file :chars)
         adjacencies (compress-graph trails)
         p1 (future (part-1 trails))
         p2 (future (part-2 adjacencies))]
     [@p1 @p2]))
 
 
-(solve (aoc/read-file 23))
+(solve (aoc/read-input 23))

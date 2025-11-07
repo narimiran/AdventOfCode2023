@@ -3,7 +3,7 @@
    [criterium.core :as c]
    [clojure.string :as str]
    [clojure.pprint :as pp]
-   aoc
+   [aoc-utils.core :as aoc]
    day01 day02 day03 day04 day05
    day06 day07 day08 day09 day10
    day11 day12 day13 day14 day15
@@ -26,8 +26,9 @@
 
 (doseq [i (range first-day (inc last-day))]
   (println "BENCHMARKING DAY" i)
-  (let [res (with-out-str
-              (c/quick-bench ((eval (symbol (format "day%02d" i) "solve")) (aoc/read-file i))))]
+  (let [inp (aoc/read-input i)
+        res (with-out-str
+              (c/quick-bench ((eval (symbol (format "day%02d" i) "solve")) inp)))]
     (println res)
     (swap! results conj {:day i :time (extract-time res)}))
   (println "\n\n\n"))

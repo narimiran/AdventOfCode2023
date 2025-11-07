@@ -1,5 +1,5 @@
 (ns day18
-  (:require aoc
+  (:require [aoc-utils.core :as aoc]
             [clojure.string :as str]))
 
 
@@ -35,9 +35,9 @@
 
 
 (defn solve [input]
-  (let [dig-plan (aoc/parse-input input parse-line)]
+  (let [dig-plan (aoc/parse-lines input parse-line)]
     [(dig-trench (map :p1 dig-plan))
      (dig-trench (map :p2 dig-plan))]))
 
 
-(solve (aoc/read-file 18))
+(solve (aoc/read-input 18))

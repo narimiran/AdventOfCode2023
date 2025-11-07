@@ -1,5 +1,5 @@
 (ns day09
-  (:require aoc))
+  (:require [aoc-utils.core :as aoc]))
 
 
 (defn extrapolate [history]
@@ -14,9 +14,9 @@
 
 
 (defn solve [input]
-  (let [histories (aoc/parse-input input :ints)]
+  (let [histories (aoc/parse-lines input :ints)]
     [(prev-sum rseq histories)
      (prev-sum identity histories)]))
 
 
-(solve (aoc/read-file 9))
+(solve (aoc/read-input 9))

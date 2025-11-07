@@ -1,5 +1,5 @@
 (ns day14
-  (:require aoc
+  (:require [aoc-utils.core :as aoc]
             [clojure.string :as str]))
 
 
@@ -59,9 +59,9 @@
 
 
 (defn solve [input]
-  (let [platform (aoc/parse-input input)]
+  (let [platform (aoc/parse-lines input)]
     [(calc-score (move-north platform))
      (calc-score (shake platform))]))
 
 
-(solve (aoc/read-file 14))
+(solve (aoc/read-input 14))

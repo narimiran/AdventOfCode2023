@@ -1,5 +1,5 @@
 (ns day16
-  (:require aoc))
+  (:require [aoc-utils.core :as aoc]))
 
 
 (defn conj' [col [a b :as xs]]
@@ -69,10 +69,10 @@
 
 
 (defn solve [input]
-  (let [contraption (aoc/parse-input input :chars)]
+  (let [contraption (aoc/parse-lines input :chars)]
     (binding [seen-starts (atom #{})]
       [(traverse contraption 0 0 1 0)
        (max-energy contraption)])))
 
 
-(solve (aoc/read-file 16))
+(solve (aoc/read-input 16))

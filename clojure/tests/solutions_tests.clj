@@ -1,11 +1,12 @@
 (ns solutions-tests
   (:require
+   [aoc-utils.core :as aoc]
    day01 day02 day03 day04 day05
    day06 day07 day08 day09 day10
    day11 day12 day13 day14 day15
    day16 day17 day18 day19 day20
    day21 day22 day23 day24 day25
-   [clojure.test :refer [deftest is run-tests successful?]]))
+   [clojure.test :refer [deftest is]]))
 
 
 
@@ -18,8 +19,8 @@
         real-input day]
     `(deftest ~test-name
        (when ~test-results
-         (is (= ~test-results (~solve-fn (aoc/read-file ~test-input)))))
-       (is (= ~real-results (~solve-fn (aoc/read-file ~real-input)))))))
+         (is (= ~test-results (~solve-fn (aoc/read-input ~test-input)))))
+       (is (= ~real-results (~solve-fn (aoc/read-input ~real-input)))))))
 
 
 
@@ -49,8 +50,3 @@
 (check-day 23 nil [2394 6554])
 (check-day 24 nil [13892 843888100572888])
 (check-day 25 54 603368)
-
-
-(let [summary (run-tests)]
-  (when-not (successful? summary)
-    (throw (Exception. "tests failed"))))

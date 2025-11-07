@@ -1,5 +1,5 @@
 (ns day17
-  (:require aoc
+  (:require [aoc-utils.core :as aoc]
             [clojure.data.priority-map :refer [priority-map]]))
 
 
@@ -47,10 +47,10 @@
 
 
 (defn solve [input]
-  (let [city (aoc/parse-input input :digits)
+  (let [city (aoc/parse-lines input :digits)
         p1 (future (traverse city 1 3))
         p2 (future (traverse city 4 10))]
     [@p1 @p2]))
 
 
-(solve (aoc/read-file 17))
+(solve (aoc/read-input 17))

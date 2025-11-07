@@ -1,5 +1,5 @@
 (ns day08
-  (:require aoc
+  (:require [aoc-utils.core :as aoc]
             [clojure.string :as str]))
 
 
@@ -27,7 +27,7 @@
 
 
 (defn solve [input]
-  (let [[[instrs'] network'] (aoc/parse-input-paragraphs input)
+  (let [[[instrs'] network'] (aoc/parse-paragraphs input)
         network (parse-network network')
         instrs  (mapv (comp keyword str) instrs')
         starts  (filter #(str/ends-with? % "A") (keys network))]
@@ -35,4 +35,4 @@
      (ghost-steps instrs network starts)]))
 
 
-(solve (aoc/read-file 8))
+(solve (aoc/read-input 8))

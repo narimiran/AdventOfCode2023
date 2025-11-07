@@ -1,5 +1,5 @@
 (ns day21
-  (:require aoc))
+  (:require [aoc-utils.core :as aoc]))
 
 
 (def p2-steps 26501365)
@@ -56,11 +56,11 @@
 
 
 (defn solve [input]
-  (let [input (aoc/parse-input input :chars)
+  (let [input (aoc/parse-lines input :chars)
         size (count input)
         start [(quot size 2) (quot size 2)]
         walls (aoc/grid->hashed-point-set input #{\#})]
     (traverse walls start)))
 
 
-(solve (aoc/read-file 21))
+(solve (aoc/read-input 21))

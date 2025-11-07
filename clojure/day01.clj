@@ -1,5 +1,5 @@
 (ns day01
-  (:require aoc
+  (:require [aoc-utils.core :as aoc]
             [clojure.string :as str]))
 
 
@@ -33,9 +33,9 @@
 
 
 (defn solve [input]
-  (let [lines (aoc/parse-input input)]
+  (let [lines (aoc/parse-lines input)]
     [(calibration-sum lines #"\d" #"\d")
      (calibration-sum lines first-patt last-patt)]))
 
 
-(solve (aoc/read-file 1))
+(solve (aoc/read-input 1))

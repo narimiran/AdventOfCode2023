@@ -1,5 +1,5 @@
 (ns day11
-  (:require aoc))
+  (:require [aoc-utils.core :as aoc]))
 
 
 (def ^:const multi (dec 1000000))
@@ -42,7 +42,7 @@
 
 
 (defn solve [input]
-  (let [lines      (aoc/parse-input input)
+  (let [lines      (aoc/parse-lines input)
         galaxies   (find-galaxies lines)
         galaxies-x (sort (map first galaxies))
         galaxies-y (sort (map second galaxies))
@@ -56,4 +56,4 @@
      (+ distances (* multi expansions))]))
 
 
-(solve (aoc/read-file 11))
+(solve (aoc/read-input 11))

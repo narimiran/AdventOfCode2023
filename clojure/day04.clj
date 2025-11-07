@@ -1,5 +1,5 @@
 (ns day04
-  (:require aoc
+  (:require [aoc-utils.core :as aoc]
             [clojure.string :as str]
             [clojure.math :refer [pow]]))
 
@@ -31,10 +31,10 @@
 
 
 (defn solve [input]
-  (let [lines   (aoc/parse-input input parse-line)
+  (let [lines   (aoc/parse-lines input parse-line)
         winners (mapv winning-numbers lines)]
     [(aoc/sum-map points winners)
      (reduce + (new-rules winners))]))
 
 
-(solve (aoc/read-file 4))
+(solve (aoc/read-input 4))

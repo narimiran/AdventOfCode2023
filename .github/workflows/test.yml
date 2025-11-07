@@ -38,14 +38,12 @@ jobs:
           key: cljdeps-${{ hashFiles('deps.edn') }}
           restore-keys: cljdeps-
 
-      - name: Test helpers
-        if : ${{ matrix.kind == 'tests' }}
-        run: clojure -M clojure/tests/aoc_tests.clj
-
       - name: Test solutions
         if : ${{ matrix.kind == 'tests' }}
-        run: clojure -M clojure/tests/solutions_tests.clj
+        working-directory: clojure
+        run: clojure -M:test
 
       - name: Benchmark solutions
         if : ${{ matrix.kind == 'benchmark' }}
-        run: clojure -M:profile clojure/tests/solutions_benchmark.clj
+        working-directory: clojure
+        run: clojure -M:profile tests/solutions_benchmark.clj

@@ -1,5 +1,5 @@
 (ns day02
-  (:require aoc
+  (:require [aoc-utils.core :as aoc]
             [clojure.string :as str]))
 
 
@@ -28,10 +28,10 @@
 
 
 (defn solve [input]
-  (let [lines (aoc/parse-input input :words {:word-sep #": |; |, "})
+  (let [lines (aoc/parse-lines input :words {:word-sep #": |; |, "})
         games (map maximums lines)]
     [(reduce + (find-valid games))
      (aoc/sum-map power games)]))
 
 
-(solve (aoc/read-file 2))
+(solve (aoc/read-input 2))
