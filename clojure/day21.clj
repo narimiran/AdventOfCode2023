@@ -42,8 +42,8 @@
                             c
                             nbs))
                   (transient #{})
-                  (map (fn [pt] (aoc/neighbours
-                                 4 pt
+                  (map (fn [pt] (aoc/neighbours-4
+                                 pt
                                  (fn [nb]
                                    (and (not (walls (normalize nb)))
                                         (if even-step?
@@ -59,7 +59,7 @@
   (let [input (aoc/parse-lines input :chars)
         size (count input)
         start [(quot size 2) (quot size 2)]
-        walls (aoc/grid->hashed-point-set input #{\#})]
+        walls (:walls (aoc/create-hashed-grid input {\# :walls}))]
     (traverse walls start)))
 
 
