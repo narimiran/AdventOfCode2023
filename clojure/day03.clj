@@ -55,7 +55,7 @@
 
 (defn solve [input]
   (let [lines    (aoc/parse-lines input)
-        points   (aoc/grid->point-map lines #(not= % \.))
+        points   (:points (aoc/create-grid lines {#(not= % \.) :points}))
         symbs    (symbol-coords points)
         gears    (set (filter #(= \* (points %)) symbs))
         solution (find-solution lines symbs gears)]

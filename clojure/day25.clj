@@ -54,7 +54,7 @@
 
 
 (defn solve [input-file]
-  (let [components (aoc/parse-lines input-file :words {:word-sep #": | "})
+  (let [components (aoc/parse-lines input-file :words #": | ")
         graph      (build-graph components)]
     (find-groups graph)))
 

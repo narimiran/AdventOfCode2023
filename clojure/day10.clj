@@ -3,7 +3,10 @@
 
 
 (defn find-start [sketch]
-  (first (aoc/grid->point-set sketch #{\S})))
+  (first (for [[j row] (map-indexed vector sketch)
+               [i c] (map-indexed vector row)
+               :when (= \S c)]
+           [i j])))
 
 
 (defn traverse [sketch start]

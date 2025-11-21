@@ -19,8 +19,8 @@
 
         :let [curr  ((trails y) x)
               seen' (conj seen pt)]
-        (= curr \.) (let [nbs (aoc/neighbours
-                               4 pt
+        (= curr \.) (let [nbs (aoc/neighbours-4
+                               pt
                                (fn [[nx ny]]
                                  (and (not (seen [nx ny]))
                                       (not (#{\#} ((trails ny) nx))))))]
@@ -42,10 +42,11 @@
     (doseq [[y row] (map-indexed vector trails)
             [x c]   (map-indexed vector row)
             :when   (not= \# c)
-            [nx ny] (aoc/neighbours 4 [x y]
-                                    (fn [[nx ny]]
-                                      (and (aoc/inside? size nx ny)
-                                           (not= \# ((trails ny) nx)))))]
+            [nx ny] (aoc/neighbours-4
+                     [x y]
+                     (fn [[nx ny]]
+                       (and (aoc/inside? size nx ny)
+                            (not= \# ((trails ny) nx)))))]
       (swap! adjacencies update (int-hash x y) assoc (int-hash nx ny) 1))
     (doseq [pt    (keys @adjacencies)
             :let  [nbs (@adjacencies pt)]

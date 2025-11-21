@@ -28,7 +28,7 @@
 
 
 (defn solve [input]
-  (let [lines (aoc/parse-lines input :words {:word-sep #": |; |, "})
+  (let [lines (aoc/parse-lines input :words #": |; |, ")
         games (map maximums lines)]
     [(reduce + (find-valid games))
      (aoc/sum-map power games)]))
