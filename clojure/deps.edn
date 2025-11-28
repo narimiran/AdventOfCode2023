@@ -14,7 +14,7 @@
   :test    {:extra-deps {lambdaisland/kaocha {:mvn/version "1.91.1392"}}
             :main-opts ["-m" "kaocha.runner"]}
   :viz     {:extra-deps {quil/quil {:mvn/version "4.3.1563"}}}
-  :splint  {:extra-deps {io.github.noahtheduke/splint {:mvn/version "1.21.0"}}
+  :splint  {:extra-deps {io.github.noahtheduke/splint {:mvn/version "1.22.0"}}
             :main-opts  ["-m" "noahtheduke.splint"]}
   :debug   {:extra-deps {com.github.flow-storm/clojure        {:mvn/version "RELEASE"}
                          com.github.flow-storm/flow-storm-dbg {:mvn/version "RELEASE"}}
